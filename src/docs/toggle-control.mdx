@@ -55,15 +55,25 @@ A toggle switch for boolean on/off settings. Mirrors the WordPress [`ToggleContr
 
 ## With Help Text
 
+Toggle the switch on to reveal today's date — this demonstrates conditional rendering with a live JSX expression inside MDX.
+
 <ShowDateDemo />
 
 ```jsx
+const formattedDate = new Date().toLocaleDateString( 'en-US', {
+  weekday: 'long',
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
 <ToggleControl
-  label="Show Date"
+  label="Show Current Date"
   checked={showDate}
-  help="Display the publication date below the title."
+  help="Toggle on to display today's date."
   onChange={(value) => setAttributes({ showDate: value })}
 />
+{ showDate && <p>{ formattedDate }</p> }
 ```
 
 ## Disabled State
