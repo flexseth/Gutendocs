@@ -1,0 +1,83 @@
+# Getting Started with MDX
+
+MDX lets you write **JSX directly inside Markdown**. This means you can use React components alongside standard Markdown syntax — perfect for interactive documentation.
+
+## What is MDX?
+
+MDX combines two things you already know:
+
+- **Markdown** — the simple formatting syntax for text
+- **JSX** — React's syntax for rendering components
+
+The result: documentation that is both readable as plain text _and_ interactive when rendered.
+
+## Live Component Examples
+
+Here's an `Alert` component rendered directly in Markdown:
+
+<Alert variant="info" title="This is MDX!">
+  This alert is a live React component embedded in a Markdown file.
+  You can pass props, nest content, and use any component registered
+  in the MDXProvider.
+</Alert>
+
+<Alert variant="success" title="No imports needed">
+  Components registered in the MDXProvider are available globally in
+  all `.mdx` files — no import statements required.
+</Alert>
+
+## Using JavaScript Expressions
+
+MDX supports JavaScript expressions with curly braces:
+
+The current year is: **{new Date().getFullYear()}**
+
+You can also use expressions inline: there are **{[1, 2, 3, 4, 5].length}** items in this array.
+
+## Buttons Work Too
+
+<Button variant="primary">Primary Action</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="outline">Outline</Button>
+
+## Cards for Grouping Content
+
+<Card title="Feature Highlight">
+  Cards are great for grouping related content. This card contains
+  regular Markdown-style text that renders inside a styled container.
+</Card>
+
+## Code Blocks
+
+Standard fenced code blocks get styled automatically:
+
+```jsx
+import { Alert } from './components';
+
+function MyPage() {
+  return (
+    <Alert variant="warning" title="Heads up!">
+      This is a custom component in MDX.
+    </Alert>
+  );
+}
+```
+
+## GFM Support
+
+GitHub Flavored Markdown features are enabled via `remark-gfm`:
+
+| Feature        | Supported |
+| -------------- | --------- |
+| Tables         | Yes       |
+| Strikethrough  | ~~Yes~~   |
+| Task lists     | Yes       |
+| Autolinks      | Yes       |
+
+- [x] Tables work
+- [x] Strikethrough works
+- [ ] Something not done yet
+
+## Next Steps
+
+Explore the component documentation pages in the sidebar to see how each component is documented with live examples and props tables.

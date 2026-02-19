@@ -1,0 +1,68 @@
+# Card
+
+Cards group related content inside a bordered container with an optional header.
+
+## Basic Card
+
+<Card title="Simple Card">
+  This is a basic card with a title and body content.
+</Card>
+
+## Card Without Title
+
+<Card>
+  Cards work without a title too. The body content renders on its own.
+</Card>
+
+## Cards with Components
+
+Cards can contain other components:
+
+<Card title="Alerts Inside a Card">
+  <Alert variant="info">
+    This info alert lives inside a card.
+  </Alert>
+  <Alert variant="warning">
+    So does this warning.
+  </Alert>
+</Card>
+
+<Card title="Buttons Inside a Card">
+  <Button variant="primary">Save</Button>
+  <Button variant="outline">Cancel</Button>
+</Card>
+
+## Usage
+
+```jsx
+<Card title="My Card">
+  <p>Any content goes here — text, components, or both.</p>
+  <Button variant="primary">Action</Button>
+</Card>
+```
+
+## Props
+
+<PropsTable props={[
+  {
+    name: 'title',
+    type: 'string',
+    default: '',
+    required: false,
+    description: 'Optional heading displayed in the card header.'
+  },
+  {
+    name: 'children',
+    type: 'ReactNode',
+    default: '',
+    required: true,
+    description: 'Card body content.'
+  }
+]} />
+
+## WordPress Mapping
+
+In WordPress, the Card maps to a Group block (`core/group`) with:
+- A custom block style for the card appearance
+- An optional Heading block inside for the title
+- `InnerBlocks` for the body content

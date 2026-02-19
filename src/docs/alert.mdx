@@ -1,0 +1,68 @@
+# Alert
+
+Alerts display contextual messages to the user. Use them for callouts, tips, warnings, and error messages in documentation.
+
+## Variants
+
+<Alert variant="info" title="Info">
+  Use info alerts for general tips and supplementary information.
+</Alert>
+
+<Alert variant="success" title="Success">
+  Use success alerts to highlight positive outcomes or confirmations.
+</Alert>
+
+<Alert variant="warning" title="Warning">
+  Use warning alerts to caution the reader about potential issues.
+</Alert>
+
+<Alert variant="error" title="Error">
+  Use error alerts for critical problems or breaking changes.
+</Alert>
+
+## Without Title
+
+<Alert variant="info">
+  Alerts work without a title prop too. The content renders directly.
+</Alert>
+
+## Usage
+
+```jsx
+<Alert variant="info" title="Optional Title">
+  Alert body content goes here. Supports **Markdown** too.
+</Alert>
+```
+
+## Props
+
+<PropsTable props={[
+  {
+    name: 'variant',
+    type: 'string',
+    default: "'info'",
+    required: false,
+    description: "Visual style — one of 'info', 'warning', 'success', 'error'."
+  },
+  {
+    name: 'title',
+    type: 'string',
+    default: '',
+    required: false,
+    description: 'Optional bold heading displayed above the body.'
+  },
+  {
+    name: 'children',
+    type: 'ReactNode',
+    default: '',
+    required: true,
+    description: 'The alert body content.'
+  }
+]} />
+
+## WordPress Mapping
+
+In WordPress, this component maps to a custom block with:
+- A `variant` attribute (select control in the block inspector)
+- A `title` attribute (text control)
+- An `InnerBlocks` area for the body content

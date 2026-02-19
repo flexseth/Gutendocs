@@ -1,0 +1,84 @@
+# Button
+
+Buttons trigger actions. The Button component supports multiple visual variants and sizes.
+
+## Variants
+
+<Button variant="primary">Primary</Button>
+<Button variant="secondary">Secondary</Button>
+<Button variant="outline">Outline</Button>
+
+## Sizes
+
+<Button variant="primary" size="small">Small</Button>
+<Button variant="primary" size="medium">Medium</Button>
+<Button variant="primary" size="large">Large</Button>
+
+## Disabled State
+
+<Button variant="primary" disabled>Disabled Primary</Button>
+<Button variant="outline" disabled>Disabled Outline</Button>
+
+## Combining Variants and Sizes
+
+<Card title="Button Matrix">
+  <Button variant="primary" size="small">Small Primary</Button>
+  <Button variant="secondary" size="small">Small Secondary</Button>
+  <Button variant="outline" size="small">Small Outline</Button>
+
+  <Button variant="primary" size="large">Large Primary</Button>
+  <Button variant="secondary" size="large">Large Secondary</Button>
+  <Button variant="outline" size="large">Large Outline</Button>
+</Card>
+
+## Usage
+
+```jsx
+<Button variant="primary" size="medium" onClick={() => alert('Clicked!')}>
+  Click Me
+</Button>
+```
+
+## Props
+
+<PropsTable props={[
+  {
+    name: 'variant',
+    type: 'string',
+    default: "'primary'",
+    required: false,
+    description: "Visual style — 'primary', 'secondary', or 'outline'."
+  },
+  {
+    name: 'size',
+    type: 'string',
+    default: "'medium'",
+    required: false,
+    description: "Button size — 'small', 'medium', or 'large'."
+  },
+  {
+    name: 'disabled',
+    type: 'boolean',
+    default: 'false',
+    required: false,
+    description: 'Whether the button is disabled.'
+  },
+  {
+    name: 'onClick',
+    type: 'function',
+    default: '',
+    required: false,
+    description: 'Click event handler.'
+  },
+  {
+    name: 'children',
+    type: 'ReactNode',
+    default: '',
+    required: true,
+    description: 'Button label content.'
+  }
+]} />
+
+## WordPress Mapping
+
+In WordPress, this maps to the core Button block (`core/button`) with custom style variations registered via `register_block_style()`.
