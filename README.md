@@ -2,6 +2,8 @@
 
 A working MDX project that demonstrates how to write React component documentation using MDX (Markdown + JSX). Built with Vite + React, this serves as a foundation for porting MDX-based component documentation into WordPress.
 
+**[Live Demo on Vercel](https://vercel.com/flexseths-projects/mdx-for-wordpress-documentation)**
+
 ## Quick Start
 
 ```bash
