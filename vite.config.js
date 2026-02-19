@@ -7,6 +7,7 @@ export default defineConfig( {
 	plugins: [
 		mdx( {
 			remarkPlugins: [ remarkGfm ],
+			providerImportSource: '@mdx-js/react',
 		} ),
 		react(),
 	],
