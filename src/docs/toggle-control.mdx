@@ -1,14 +1,36 @@
+import { useState } from 'react';
+import ToggleControl from '../components/ToggleControl';
+
+export const EnableFeatureDemo = () => {
+  const [checked, setChecked] = useState(false);
+  return (
+    <ToggleControl
+      label="Enable Feature"
+      checked={checked}
+      onChange={setChecked}
+    />
+  );
+};
+
+export const ShowDateDemo = () => {
+  const [checked, setChecked] = useState(true);
+  return (
+    <ToggleControl
+      label="Show Date"
+      checked={checked}
+      help="Display the publication date below the title."
+      onChange={setChecked}
+    />
+  );
+};
+
 # ToggleControl
 
 A toggle switch for boolean on/off settings. Mirrors the WordPress [`ToggleControl`](https://developer.wordpress.org/block-editor/reference-guides/components/toggle-control/) from `@wordpress/components`.
 
 ## Basic Usage
 
-<ToggleControl
-  label="Enable Feature"
-  checked={false}
-  onChange={(value) => {}}
-/>
+<EnableFeatureDemo />
 
 ```jsx
 <ToggleControl
@@ -20,12 +42,7 @@ A toggle switch for boolean on/off settings. Mirrors the WordPress [`ToggleContr
 
 ## With Help Text
 
-<ToggleControl
-  label="Show Date"
-  checked={true}
-  help="Display the publication date below the title."
-  onChange={(value) => {}}
-/>
+<ShowDateDemo />
 
 ```jsx
 <ToggleControl

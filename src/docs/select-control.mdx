@@ -1,19 +1,46 @@
+import { useState } from 'react';
+import SelectControl from '../components/SelectControl';
+
+export const AlignmentDemo = () => {
+  const [value, setValue] = useState('left');
+  return (
+    <SelectControl
+      label="Alignment"
+      value={value}
+      options={[
+        { label: 'Left', value: 'left' },
+        { label: 'Center', value: 'center' },
+        { label: 'Right', value: 'right' },
+      ]}
+      onChange={setValue}
+    />
+  );
+};
+
+export const FontSizeDemo = () => {
+  const [value, setValue] = useState('medium');
+  return (
+    <SelectControl
+      label="Font Size"
+      value={value}
+      options={[
+        { label: 'Small', value: 'small' },
+        { label: 'Medium', value: 'medium' },
+        { label: 'Large', value: 'large' },
+      ]}
+      help="Choose the font size for your content."
+      onChange={setValue}
+    />
+  );
+};
+
 # SelectControl
 
 A dropdown select menu for choosing from predefined options. Mirrors the WordPress [`SelectControl`](https://developer.wordpress.org/block-editor/reference-guides/components/select-control/) from `@wordpress/components`.
 
 ## Basic Usage
 
-<SelectControl
-  label="Alignment"
-  value="left"
-  options={[
-    { label: 'Left', value: 'left' },
-    { label: 'Center', value: 'center' },
-    { label: 'Right', value: 'right' }
-  ]}
-  onChange={(value) => {}}
-/>
+<AlignmentDemo />
 
 ```jsx
 <SelectControl
@@ -30,17 +57,7 @@ A dropdown select menu for choosing from predefined options. Mirrors the WordPre
 
 ## With Help Text
 
-<SelectControl
-  label="Font Size"
-  value="medium"
-  options={[
-    { label: 'Small', value: 'small' },
-    { label: 'Medium', value: 'medium' },
-    { label: 'Large', value: 'large' }
-  ]}
-  help="Choose the font size for your content."
-  onChange={(value) => {}}
-/>
+<FontSizeDemo />
 
 ```jsx
 <SelectControl
