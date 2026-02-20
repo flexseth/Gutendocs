@@ -9,6 +9,7 @@ const navItems = [
 	{ path: '/docs/select-control', label: 'SelectControl' },
 	{ path: '/docs/range-control', label: 'RangeControl' },
 	{ path: '/docs/text-control', label: 'TextControl' },
+	{ path: '/docs/date-time-picker', label: 'DateTimePicker' },
 ];
 
 /**

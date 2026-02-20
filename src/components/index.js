@@ -7,3 +7,4 @@ export { default as ToggleControl } from './ToggleControl';
 export { default as SelectControl } from './SelectControl';
 export { default as RangeControl } from './RangeControl';
 export { default as TextControl } from './TextControl';
+export { default as DateTimePicker } from './DateTimePicker';
