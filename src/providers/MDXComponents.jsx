@@ -1,5 +1,5 @@
 import { MDXProvider } from '@mdx-js/react';
-import { Alert, Button, Card, CodeBlock, PropsTable, ToggleControl, SelectControl } from '../components';
+import { Alert, Button, Card, CodeBlock, PropsTable, ToggleControl, SelectControl, RangeControl } from '../components';
 
 /**
  * Maps standard markdown elements and custom components
@@ -37,6 +37,7 @@ const components = {
 	PropsTable,
 	ToggleControl,
 	SelectControl,
+	RangeControl,
 };
 
 /**

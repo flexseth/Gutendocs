@@ -1,37 +1,40 @@
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
 /**
- * A useState drop-in that persists the value to localStorage.
+ * A hook that persists state to localStorage.
  *
- * On mount, reads the stored value for the given key. On update,
- * writes the new value back to localStorage so it survives page reloads.
+ * Falls back to in-memory state when localStorage is unavailable.
  *
- * Mirrors the concept of WordPress block attributes persisting editor state,
- * adapted for a browser-side React/MDX documentation environment.
- *
- * @template T
- * @param {string} key          - localStorage key. Use a unique key per demo instance.
- * @param {T}      defaultValue - Value used when nothing is stored yet.
- * @returns {[T, Function]}     - Current value and setter, same signature as useState.
+ * @param {string} key       The localStorage key.
+ * @param {*}      initial   The default value when no stored value exists.
+ * @return {[*, Function]}   A stateful value and its setter.
  */
-export function useLocalStorage( key, defaultValue ) {
-	const [ value, setValue ] = useState( () => {
+export function useLocalStorage( key, initial ) {
+	const [ storedValue, setStoredValue ] = useState( () => {
 		try {
-			const stored = localStorage.getItem( key );
-			return stored !== null ? JSON.parse( stored ) : defaultValue;
+			const item = window.localStorage.getItem( key );
+			return item !== null ? JSON.parse( item ) : initial;
 		} catch {
-			return defaultValue;
+			return initial;
 		}
 	} );
 
-	const setStoredValue = ( newValue ) => {
-		setValue( newValue );
-		try {
-			localStorage.setItem( key, JSON.stringify( newValue ) );
-		} catch {
-			// Silently ignore write errors (e.g. private browsing quota exceeded).
-		}
-	};
+	const setValue = useCallback(
+		( value ) => {
+			const valueToStore =
+				typeof value === 'function' ? value( storedValue ) : value;
+			setStoredValue( valueToStore );
+			try {
+				window.localStorage.setItem(
+					key,
+					JSON.stringify( valueToStore )
+				);
+			} catch {
+				// Storage full or unavailable — state still updates in memory.
+			}
+		},
+		[ key, storedValue ]
+	);
 
-	return [ value, setStoredValue ];
+	return [ storedValue, setValue ];
 }

@@ -8,37 +8,22 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [1.3.0] - 2026-02-19
+## [1.4.0] - 2026-02-19
 
 ### Added
 
-- `src/hooks/useLocalStorage.js` — a `useState` drop-in hook that reads from `localStorage` on mount and writes on every change, persisting demo state across page reloads
-- Persistent state applied to all interactive demos:
-  - `ToggleControl` → `EnableFeatureDemo` (`demo-toggle-enable-feature`), `ShowDateDemo` (`demo-toggle-show-date`)
-  - `SelectControl` → `AlignmentDemo` (`demo-select-alignment`), `FontSizeDemo` (`demo-select-font-size`)
-
-### Changed
-
-- All stateful demo components now use `useLocalStorage` instead of `useState` — selections and toggles survive page refreshes
-
-### Notes
-
-- Key naming convention: `demo-<component>-<field>` — must be unique per demo
-- Mirrors the way WordPress block attributes persist state in the editor
+- `RangeControl` component — numeric slider mirroring `@wordpress/components`
+  - Props: `label`, `value`, `onChange`, `min`, `max`, `step`, `help`, `disabled`, `withInputField`, `className`
+  - Paired numeric input field, min/max labels, keyboard accessible, focus-visible ring
+- `range-control.mdx` — three interactive persistent demos:
+  - `FontSizeDemo` — drag to resize live sample text (12–48px)
+  - `OpacityDemo` — control element transparency (0–1, step 0.1)
+  - `ColumnsDemo` — live CSS grid redraws column count (1–6)
+- All demos persist state via `useLocalStorage` (keys: `demo-range-font-size`, `demo-range-opacity`, `demo-range-columns`)
+- Registered in `MDXProvider`, barrel export, route `/docs/range-control`, sidebar nav, and `docs.css`
 
 ---
 
-## [1.2.0] - 2026-02-19
-
-### Added
-
-- Live date display demo in `toggle-control.mdx` — "With Help Text" section now shows today's date (formatted as `Weekday, Month Day, Year`) when the toggle is switched on
-- Demonstrates conditional JSX rendering inside MDX using a `useState` hook and `toLocaleDateString`
-- Sidebar brand renamed from "MDX Docs" to "Gutendoc"
-
-### Changed
-
-- `ShowDateDemo` updated: toggle defaults to off, conditionally renders current date on enable
 ## [1.1.0] - 2026-02-19
 
 Project renamed to `Gutendocs` — a documentation system for WordPress projects using MDX.
