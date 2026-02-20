@@ -6,6 +6,10 @@ All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
 
+---
+
+## [1.8.1] - 2026-02-20
+
 ### Changed
 - Renamed GitHub Copilot agent file from `my-agent.agent.md` to `MDX-Gutendocs-creator.md` to match the agent's `name` field
 
