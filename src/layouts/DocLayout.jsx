@@ -8,6 +8,7 @@ const navItems = [
 	{ path: '/docs/toggle-control', label: 'ToggleControl' },
 	{ path: '/docs/select-control', label: 'SelectControl' },
 	{ path: '/docs/range-control', label: 'RangeControl' },
+	{ path: '/docs/text-control', label: 'TextControl' },
 ];
 
 /**

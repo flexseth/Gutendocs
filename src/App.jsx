@@ -7,6 +7,7 @@ import CardDocs from './docs/card.mdx';
 import ToggleControlDocs from './docs/toggle-control.mdx';
 import SelectControlDocs from './docs/select-control.mdx';
 import RangeControlDocs from './docs/range-control.mdx';
+import TextControlDocs from './docs/text-control.mdx';
 
 /**
  * Application root with documentation routes.
@@ -23,6 +24,7 @@ export default function App() {
 				<Route path="/docs/toggle-control" element={ <ToggleControlDocs /> } />
 				<Route path="/docs/select-control" element={ <SelectControlDocs /> } />
 				<Route path="/docs/range-control" element={ <RangeControlDocs /> } />
+				<Route path="/docs/text-control" element={ <TextControlDocs /> } />
 			</Routes>
 		</DocLayout>
 	);

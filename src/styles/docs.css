@@ -595,3 +595,58 @@ body {
 	color: var(--color-text-muted);
 	line-height: 1.4;
 }
+
+/* ==========================================================================
+   TextControl
+   ========================================================================== */
+
+.text-control {
+	display: flex;
+	flex-direction: column;
+	gap: 0.375rem;
+	margin-bottom: 1rem;
+}
+
+.text-control__label {
+	font-size: 0.875rem;
+	font-weight: 500;
+	color: var(--color-text);
+}
+
+.text-control--disabled .text-control__label {
+	opacity: 0.5;
+}
+
+.text-control__input {
+	width: 100%;
+	padding: 0.5rem 0.75rem;
+	font-size: 0.875rem;
+	font-family: var(--font-sans);
+	color: var(--color-text);
+	background: var(--color-bg);
+	border: 1px solid var(--color-border);
+	border-radius: 0.375rem;
+	transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.text-control__input:focus {
+	outline: none;
+	border-color: var(--color-primary);
+	box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15);
+}
+
+.text-control__input:disabled {
+	cursor: not-allowed;
+	opacity: 0.5;
+	background-color: var(--color-bg-muted);
+}
+
+.text-control__input::placeholder {
+	color: var(--color-text-muted);
+}
+
+.text-control__help {
+	font-size: 0.8125rem;
+	color: var(--color-text-muted);
+	line-height: 1.4;
+}

@@ -1,0 +1,238 @@
+import TextControl from '../components/TextControl';
+import { useLocalStorage } from '../hooks/useLocalStorage';
+
+export const BasicDemo = () => {
+  const [value, setValue] = useLocalStorage('demo-text-basic', '');
+  return (
+    <div>
+      <TextControl
+        label="Enter your text"
+        value={value}
+        onChange={setValue}
+        placeholder="Type something..."
+      />
+      { value && (
+        <p style={{ marginTop: '0.5rem', fontSize: '0.9375rem', color: '#1e293b' }}>
+          Preview: { value }
+        </p>
+      ) }
+    </div>
+  );
+};
+
+export const EmailDemo = () => {
+  const [value, setValue] = useLocalStorage('demo-text-email', '');
+  return (
+    <TextControl
+      label="Email Address"
+      value={value}
+      onChange={setValue}
+      type="email"
+      placeholder="name@example.com"
+      help="Enter a valid email address."
+    />
+  );
+};
+
+export const HeadingDemo = () => {
+  const [heading, setHeading] = useLocalStorage('demo-text-heading', '');
+  const [subheading, setSubheading] = useLocalStorage('demo-text-subheading', '');
+  return (
+    <div>
+      <TextControl
+        label="Heading"
+        value={heading}
+        onChange={setHeading}
+        placeholder="Add heading..."
+      />
+      <TextControl
+        label="Subheading"
+        value={subheading}
+        onChange={setSubheading}
+        placeholder="Add subheading..."
+      />
+      { ( heading || subheading ) && (
+        <div style={{
+          marginTop: '0.75rem',
+          padding: '1rem',
+          background: '#f8fafc',
+          border: '1px solid #e2e8f0',
+          borderRadius: '0.375rem',
+        }}>
+          { heading && <h3 style={{ margin: '0 0 0.25rem' }}>{ heading }</h3> }
+          { subheading && <p style={{ margin: 0, color: '#64748b' }}>{ subheading }</p> }
+        </div>
+      ) }
+    </div>
+  );
+};
+
+# TextControl
+
+A labeled text input for collecting user text. Mirrors the WordPress [`TextControl`](https://developer.wordpress.org/block-editor/reference-guides/components/text-control/) from `@wordpress/components`.
+
+## Basic Usage
+
+<BasicDemo />
+
+```jsx
+<TextControl
+  label="Enter your text"
+  value={textValue}
+  onChange={(value) => setAttributes({ textValue: value })}
+  placeholder="Type something..."
+/>
+```
+
+## Email Input
+
+<EmailDemo />
+
+```jsx
+<TextControl
+  label="Email Address"
+  value={email}
+  onChange={(value) => setAttributes({ email: value })}
+  type="email"
+  placeholder="name@example.com"
+  help="Enter a valid email address."
+/>
+```
+
+## Multiple Controls
+
+<HeadingDemo />
+
+```jsx
+<TextControl
+  label="Heading"
+  value={heading}
+  onChange={(value) => setAttributes({ heading: value })}
+  placeholder="Add heading..."
+/>
+<TextControl
+  label="Subheading"
+  value={subheading}
+  onChange={(value) => setAttributes({ subheading: value })}
+  placeholder="Add subheading..."
+/>
+```
+
+## WordPress Usage (edit.js)
+
+```jsx
+import { __ } from '@wordpress/i18n';
+import { TextControl, PanelBody } from '@wordpress/components';
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+
+export default function Edit( { attributes, setAttributes } ) {
+  const blockProps = useBlockProps();
+  const { heading, subheading } = attributes;
+
+  return (
+    <>
+      <InspectorControls>
+        <PanelBody title={ __( 'Text Settings', 'your-text-domain' ) }>
+          <TextControl
+            label={ __( 'Heading', 'your-text-domain' ) }
+            value={ heading }
+            onChange={ ( value ) => setAttributes( { heading: value } ) }
+          />
+          <TextControl
+            label={ __( 'Subheading', 'your-text-domain' ) }
+            value={ subheading }
+            onChange={ ( value ) => setAttributes( { subheading: value } ) }
+          />
+        </PanelBody>
+      </InspectorControls>
+      <div { ...blockProps }>
+        <h2>{ heading || __( 'Add heading...', 'your-text-domain' ) }</h2>
+        <p>{ subheading || __( 'Add subheading...', 'your-text-domain' ) }</p>
+      </div>
+    </>
+  );
+}
+```
+
+## block.json Attributes
+
+```json
+{
+  "attributes": {
+    "heading": { "type": "string", "default": "" },
+    "subheading": { "type": "string", "default": "" }
+  }
+}
+```
+
+## Props
+
+<PropsTable props={[
+  {
+    name: 'label',
+    type: 'string',
+    default: '',
+    required: true,
+    description: 'Label text displayed above the input.'
+  },
+  {
+    name: 'value',
+    type: 'string',
+    default: '',
+    required: true,
+    description: 'The current input value (controlled).'
+  },
+  {
+    name: 'onChange',
+    type: 'function',
+    default: '',
+    required: true,
+    description: 'Callback fired with the new string value on change.'
+  },
+  {
+    name: 'help',
+    type: 'string',
+    default: '',
+    required: false,
+    description: 'Optional help text displayed below the input.'
+  },
+  {
+    name: 'placeholder',
+    type: 'string',
+    default: '',
+    required: false,
+    description: 'Placeholder text shown when the input is empty.'
+  },
+  {
+    name: 'type',
+    type: 'string',
+    default: "'text'",
+    required: false,
+    description: "HTML input type: 'text', 'email', 'tel', 'number', 'password', 'url'."
+  },
+  {
+    name: 'disabled',
+    type: 'boolean',
+    default: 'false',
+    required: false,
+    description: 'Disables the input when true.'
+  },
+  {
+    name: 'autoComplete',
+    type: 'string',
+    default: '',
+    required: false,
+    description: 'HTML autocomplete attribute value.'
+  },
+  {
+    name: 'className',
+    type: 'string',
+    default: "''",
+    required: false,
+    description: 'Additional CSS class names applied to the wrapper.'
+  }
+]} />
+
+## WordPress Mapping
+
+In WordPress, `TextControl` is imported directly from `@wordpress/components`. Use `type` to match semantic HTML input types — `email`, `tel`, `number`, `password`, or `url`. Place inside `InspectorControls` + `PanelBody` for sidebar settings, or inline in the block canvas for direct editing. Always define string attributes in `block.json` with an empty string default.
