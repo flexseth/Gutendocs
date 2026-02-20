@@ -6,6 +6,9 @@ import ButtonDocs from './docs/button.mdx';
 import CardDocs from './docs/card.mdx';
 import ToggleControlDocs from './docs/toggle-control.mdx';
 import SelectControlDocs from './docs/select-control.mdx';
+import RangeControlDocs from './docs/range-control.mdx';
+import TextControlDocs from './docs/text-control.mdx';
+import DateTimePickerDocs from './docs/date-time-picker.mdx';
 
 /**
  * Application root with documentation routes.
@@ -21,6 +24,9 @@ export default function App() {
 				<Route path="/docs/card" element={ <CardDocs /> } />
 				<Route path="/docs/toggle-control" element={ <ToggleControlDocs /> } />
 				<Route path="/docs/select-control" element={ <SelectControlDocs /> } />
+				<Route path="/docs/range-control" element={ <RangeControlDocs /> } />
+				<Route path="/docs/text-control" element={ <TextControlDocs /> } />
+				<Route path="/docs/date-time-picker" element={ <DateTimePickerDocs /> } />
 			</Routes>
 		</DocLayout>
 	);

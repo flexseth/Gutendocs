@@ -1,0 +1,270 @@
+import RangeControl from '../components/RangeControl';
+import { useLocalStorage } from '../hooks/useLocalStorage';
+
+export const FontSizeDemo = () => {
+  const [value, setValue] = useLocalStorage('demo-range-font-size', 16);
+  return (
+    <div>
+      <RangeControl
+        label="Font Size"
+        value={value}
+        onChange={setValue}
+        min={12}
+        max={48}
+      />
+      <p style={{ fontSize: `${value}px`, marginTop: '0.75rem', transition: 'font-size 0.15s ease' }}>
+        Sample text at {value}px
+      </p>
+    </div>
+  );
+};
+
+export const OpacityDemo = () => {
+  const [value, setValue] = useLocalStorage('demo-range-opacity', 1);
+  return (
+    <div>
+      <RangeControl
+        label="Opacity"
+        value={value}
+        onChange={setValue}
+        min={0}
+        max={1}
+        step={0.1}
+        help="Controls the transparency of the element."
+      />
+      <div style={{
+        backgroundColor: '#3b82f6',
+        opacity: value,
+        padding: '1rem',
+        marginTop: '0.75rem',
+        borderRadius: '0.375rem',
+        color: '#fff',
+        textAlign: 'center',
+        transition: 'opacity 0.15s ease',
+      }}>
+        Opacity: {value}
+      </div>
+    </div>
+  );
+};
+
+export const ColumnsDemo = () => {
+  const [value, setValue] = useLocalStorage('demo-range-columns', 3);
+  return (
+    <div>
+      <RangeControl
+        label="Number of Columns"
+        value={value}
+        onChange={setValue}
+        min={1}
+        max={6}
+        help="Set the number of columns for the grid layout."
+      />
+      <div style={{
+        display: 'grid',
+        gridTemplateColumns: `repeat(${value}, 1fr)`,
+        gap: '0.5rem',
+        marginTop: '0.75rem',
+      }}>
+        {Array.from({ length: value }).map((_, i) => (
+          <div key={i} style={{
+            background: '#f1f5f9',
+            border: '1px solid #e2e8f0',
+            borderRadius: '0.25rem',
+            padding: '0.75rem',
+            textAlign: 'center',
+            fontSize: '0.8125rem',
+            color: '#64748b',
+          }}>
+            Col {i + 1}
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+# RangeControl
+
+A slider for selecting numeric values within a defined range. Mirrors the WordPress [`RangeControl`](https://developer.wordpress.org/block-editor/reference-guides/components/range-control/) from `@wordpress/components`.
+
+## Basic Usage
+
+<FontSizeDemo />
+
+```jsx
+<RangeControl
+  label="Font Size"
+  value={fontSize}
+  onChange={(value) => setAttributes({ fontSize: value })}
+  min={12}
+  max={48}
+/>
+```
+
+## With Step Value
+
+<OpacityDemo />
+
+```jsx
+<RangeControl
+  label="Opacity"
+  value={opacity}
+  onChange={(value) => setAttributes({ opacity: value })}
+  min={0}
+  max={1}
+  step={0.1}
+  help="Controls the transparency of the element."
+/>
+```
+
+## With Help Text
+
+<ColumnsDemo />
+
+```jsx
+<RangeControl
+  label="Number of Columns"
+  value={columns}
+  onChange={(value) => setAttributes({ columns: value })}
+  min={1}
+  max={6}
+  help="Set the number of columns for the grid layout."
+/>
+```
+
+## WordPress Usage (edit.js)
+
+```jsx
+import { __ } from '@wordpress/i18n';
+import { RangeControl, PanelBody } from '@wordpress/components';
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+
+export default function Edit( { attributes, setAttributes } ) {
+  const blockProps = useBlockProps();
+  const { borderRadius, borderWidth } = attributes;
+
+  return (
+    <>
+      <InspectorControls>
+        <PanelBody title={ __( 'Border Settings', 'your-text-domain' ) }>
+          <RangeControl
+            label={ __( 'Border Radius', 'your-text-domain' ) }
+            value={ borderRadius }
+            onChange={ ( value ) => setAttributes( { borderRadius: value } ) }
+            min={ 0 }
+            max={ 50 }
+          />
+          <RangeControl
+            label={ __( 'Border Width', 'your-text-domain' ) }
+            value={ borderWidth }
+            onChange={ ( value ) => setAttributes( { borderWidth: value } ) }
+            min={ 0 }
+            max={ 10 }
+          />
+        </PanelBody>
+      </InspectorControls>
+      <div
+        { ...blockProps }
+        style={ {
+          border: `${ borderWidth }px solid #000`,
+          borderRadius: `${ borderRadius }px`,
+          padding: '20px',
+        } }
+      >
+        { __( 'Box with custom border', 'your-text-domain' ) }
+      </div>
+    </>
+  );
+}
+```
+
+## block.json Attributes
+
+```json
+{
+  "attributes": {
+    "borderRadius": { "type": "number", "default": 0 },
+    "borderWidth": { "type": "number", "default": 1 }
+  }
+}
+```
+
+## Props
+
+<PropsTable props={[
+  {
+    name: 'label',
+    type: 'string',
+    default: '',
+    required: true,
+    description: 'Label text displayed above the slider.'
+  },
+  {
+    name: 'value',
+    type: 'number',
+    default: '',
+    required: true,
+    description: 'The current numeric value (controlled).'
+  },
+  {
+    name: 'onChange',
+    type: 'function',
+    default: '',
+    required: true,
+    description: 'Callback fired with the new number when the slider changes.'
+  },
+  {
+    name: 'min',
+    type: 'number',
+    default: '0',
+    required: false,
+    description: 'Minimum allowed value.'
+  },
+  {
+    name: 'max',
+    type: 'number',
+    default: '100',
+    required: false,
+    description: 'Maximum allowed value.'
+  },
+  {
+    name: 'step',
+    type: 'number',
+    default: '1',
+    required: false,
+    description: 'Step increment between values.'
+  },
+  {
+    name: 'help',
+    type: 'string',
+    default: '',
+    required: false,
+    description: 'Optional help text displayed below the control.'
+  },
+  {
+    name: 'disabled',
+    type: 'boolean',
+    default: 'false',
+    required: false,
+    description: 'Disables the slider when true.'
+  },
+  {
+    name: 'withInputField',
+    type: 'boolean',
+    default: 'true',
+    required: false,
+    description: 'Show a numeric input field alongside the slider.'
+  },
+  {
+    name: 'className',
+    type: 'string',
+    default: "''",
+    required: false,
+    description: 'Additional CSS class names applied to the wrapper.'
+  }
+]} />
+
+## WordPress Mapping
+
+In WordPress, `RangeControl` is imported directly from `@wordpress/components`. Always define numeric attributes in `block.json` with a sensible `default`. Use `min`, `max`, and `step` to constrain the value range. For decimal values like opacity, set `step={0.1}`. Place inside `InspectorControls` + `PanelBody` for sidebar settings panels.

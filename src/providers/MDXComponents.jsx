@@ -38,6 +38,8 @@ const components = {
 	PropsTable,
 	ToggleControl,
 	SelectControl,
+	RangeControl,
+	TextControl,
 };
 
 /**

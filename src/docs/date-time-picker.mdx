@@ -1,0 +1,227 @@
+import DateTimePicker from '../components/DateTimePicker';
+import { useLocalStorage } from '../hooks/useLocalStorage';
+
+export const BasicDemo = () => {
+  const [value, setValue] = useLocalStorage('demo-datetime-basic', '');
+  return (
+    <div>
+      <DateTimePicker
+        label="Event Date & Time"
+        value={value}
+        onChange={setValue}
+      />
+      { value && (
+        <p style={{ marginTop: '0.5rem', fontSize: '0.9375rem', color: '#1e293b' }}>
+          Selected: { new Date(value).toLocaleString() }
+        </p>
+      ) }
+    </div>
+  );
+};
+
+export const DateOnlyDemo = () => {
+  const [value, setValue] = useLocalStorage('demo-datetime-date-only', '');
+  return (
+    <DateTimePicker
+      label="Publish Date"
+      value={value}
+      onChange={setValue}
+      dateOnly
+      help="Choose the date to publish this post."
+    />
+  );
+};
+
+export const TimeOnlyDemo = () => {
+  const [value, setValue] = useLocalStorage('demo-datetime-time-only', '');
+  return (
+    <DateTimePicker
+      label="Start Time"
+      value={value}
+      onChange={setValue}
+      timeOnly
+      help="Set the time this event begins."
+    />
+  );
+};
+
+# DateTimePicker
+
+A date and time picker for selecting a combined date and time value. Mirrors the WordPress [`DateTimePicker`](https://developer.wordpress.org/block-editor/reference-guides/components/date-time-picker/) from `@wordpress/components`.
+
+## Basic Usage
+
+<BasicDemo />
+
+```jsx
+<DateTimePicker
+  label="Event Date & Time"
+  value={dateTime}
+  onChange={(value) => setAttributes({ dateTime: value })}
+/>
+```
+
+## Date Only
+
+<DateOnlyDemo />
+
+```jsx
+<DateTimePicker
+  label="Publish Date"
+  value={publishDate}
+  onChange={(value) => setAttributes({ publishDate: value })}
+  dateOnly
+  help="Choose the date to publish this post."
+/>
+```
+
+## Time Only
+
+<TimeOnlyDemo />
+
+```jsx
+<DateTimePicker
+  label="Start Time"
+  value={startTime}
+  onChange={(value) => setAttributes({ startTime: value })}
+  timeOnly
+  help="Set the time this event begins."
+/>
+```
+
+## Disabled State
+
+<DateTimePicker
+  label="Locked Date & Time"
+  value="2025-06-15T14:30:00"
+  disabled
+  onChange={() => {}}
+/>
+
+```jsx
+<DateTimePicker
+  label="Locked Date & Time"
+  value={dateTime}
+  disabled={isLocked}
+  onChange={(value) => setAttributes({ dateTime: value })}
+/>
+```
+
+## WordPress Usage (edit.js)
+
+```jsx
+import { __ } from '@wordpress/i18n';
+import { DateTimePicker, PanelBody } from '@wordpress/components';
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+
+export default function Edit( { attributes, setAttributes } ) {
+  const blockProps = useBlockProps();
+  const { eventDate } = attributes;
+
+  return (
+    <>
+      <InspectorControls>
+        <PanelBody title={ __( 'Event Settings', 'your-text-domain' ) }>
+          <DateTimePicker
+            currentDate={ eventDate }
+            onChange={ ( value ) => setAttributes( { eventDate: value } ) }
+            is12Hour
+          />
+        </PanelBody>
+      </InspectorControls>
+      <div { ...blockProps }>
+        <p>{ eventDate || __( 'No date set', 'your-text-domain' ) }</p>
+      </div>
+    </>
+  );
+}
+```
+
+## block.json Attributes
+
+```json
+{
+  "attributes": {
+    "eventDate": { "type": "string", "default": "" }
+  }
+}
+```
+
+## Props
+
+<PropsTable props={[
+  {
+    name: 'label',
+    type: 'string',
+    default: '',
+    required: false,
+    description: 'Label text displayed above the control.'
+  },
+  {
+    name: 'value',
+    type: 'string',
+    default: '',
+    required: true,
+    description: 'ISO 8601 date/time string representing the current value (controlled).'
+  },
+  {
+    name: 'onChange',
+    type: 'function',
+    default: '',
+    required: true,
+    description: 'Callback fired with the new ISO 8601 string when the value changes.'
+  },
+  {
+    name: 'currentDate',
+    type: 'string',
+    default: '',
+    required: false,
+    description: 'Alias for value. Matches the WordPress DateTimePicker prop name.'
+  },
+  {
+    name: 'is12Hour',
+    type: 'boolean',
+    default: 'false',
+    required: false,
+    description: 'When true, displays time in 12-hour (AM/PM) format.'
+  },
+  {
+    name: 'dateOnly',
+    type: 'boolean',
+    default: 'false',
+    required: false,
+    description: 'When true, shows only the date input and hides the time input.'
+  },
+  {
+    name: 'timeOnly',
+    type: 'boolean',
+    default: 'false',
+    required: false,
+    description: 'When true, shows only the time input and hides the date input.'
+  },
+  {
+    name: 'help',
+    type: 'string',
+    default: '',
+    required: false,
+    description: 'Optional help text displayed below the control.'
+  },
+  {
+    name: 'disabled',
+    type: 'boolean',
+    default: 'false',
+    required: false,
+    description: 'Disables the control when true.'
+  },
+  {
+    name: 'className',
+    type: 'string',
+    default: "''",
+    required: false,
+    description: 'Additional CSS class names applied to the wrapper.'
+  }
+]} />
+
+## WordPress Mapping
+
+In WordPress, `DateTimePicker` is imported directly from `@wordpress/components` and uses `currentDate` (instead of `value`) and `onChange` to handle the selected ISO 8601 date string. Set `is12Hour` to match the site's locale time format. Store the date string attribute in `block.json` with an empty string default. Use `@wordpress/date`'s `dateI18n` utility to format dates for display.
