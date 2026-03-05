@@ -17,6 +17,20 @@ All notable changes to this project will be documented in this file.
     - `BorderWidthDemo` — border-width editor with live bordered element (key: `demo-box-border`)
     - `VerticalHorizontalDemo` — `splitOnAxis` mode for vertical/horizontal control (key: `demo-box-axes`)
   - Registered in `MDXProvider`, barrel export, route `/docs/box-control`, sidebar nav, and `docs.css`
+- `FocalPointPicker` component — interactive image focal point selector mirroring `@wordpress/components`
+  - Props: `url`, `value`, `onChange`, `label`, `help`, `disabled`, `className`
+  - Click-and-drag crosshair on image; numeric X/Y inputs for precise control
+  - Touch-friendly (touchstart/touchmove events)
+  - `focal-point-picker.mdx` — three demos:
+    - `BasicDemo` — drag crosshair with live x/y readout (key: `demo-focal-basic`)
+    - `BackgroundDemo` — drives `background-position` with live preview (key: `demo-focal-bg`)
+    - `DisabledDemo` — static disabled state
+  - Registered in `MDXProvider`, barrel export, route `/docs/focal-point-picker`, sidebar nav, and `docs.css`
+- `BlockControls` component — block toolbar controls wrapper mirroring `@wordpress/block-editor`
+  - Props: `group`, `controls`, `children`, `className`
+  - Renders a toolbar group in the block editor toolbar above the selected block
+  - `block-controls.mdx` — usage examples and WordPress mapping
+  - Registered in `MDXProvider`, barrel export, route `/docs/block-controls`, sidebar nav, and `docs.css`
 - `Dropdown` component — composable dropdown with render-prop trigger and popover panel mirroring `@wordpress/components`
   - Props: `renderToggle`, `renderContent`, `popoverProps` (placement), `className`, `contentClassName`, `defaultOpen`, `onToggle`, `onClose`
   - Closes on outside click and Escape key; popover aligns via `placement` option

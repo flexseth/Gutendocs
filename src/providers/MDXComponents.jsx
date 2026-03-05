@@ -1,7 +1,25 @@
 import { MDXProvider } from '@mdx-js/react';
-import { Alert, BoxControl, Button, Card, CheckboxControl, CodeBlock, CodeTabs, ComboboxControl, PropsTable, ToggleControl, SelectControl, RangeControl, TextControl, DateTimePicker, ColorPalette, ColorPicker } from '../components';
-import { Alert, BlockControls, Button, Card, CheckboxControl, CodeBlock, CodeTabs, ComboboxControl, PropsTable, ToggleControl, SelectControl, RangeControl, TextControl, DateTimePicker, ColorPalette, ColorPicker } from '../components';
-import { Alert, Button, Card, CheckboxControl, CodeBlock, CodeTabs, ComboboxControl, Dropdown, PropsTable, ToggleControl, SelectControl, RangeControl, TextControl, DateTimePicker, ColorPalette, ColorPicker } from '../components';
+import {
+	Alert,
+	BlockControls,
+	BoxControl,
+	Button,
+	Card,
+	CheckboxControl,
+	CodeBlock,
+	CodeTabs,
+	ColorPalette,
+	ColorPicker,
+	ComboboxControl,
+	DateTimePicker,
+	Dropdown,
+	FocalPointPicker,
+	PropsTable,
+	RangeControl,
+	SelectControl,
+	TextControl,
+	ToggleControl,
+} from '../components';
 
 /**
  * Maps standard markdown elements and custom components
@@ -50,6 +68,7 @@ const components = {
 	ColorPicker,
 	ComboboxControl,
 	Dropdown,
+	FocalPointPicker,
 };
 
 /**
