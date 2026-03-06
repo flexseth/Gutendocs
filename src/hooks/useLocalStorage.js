@@ -18,8 +18,13 @@ export function useLocalStorage( key, initial ) {
 			}
 			const parsed = JSON.parse( item );
 			// Validate that the stored value matches the expected type.
-			if ( typeof parsed !== typeof initial && initial !== undefined ) {
-				return initial;
+			if ( initial !== undefined && initial !== null ) {
+				if ( Array.isArray( initial ) !== Array.isArray( parsed ) ) {
+					return initial;
+				}
+				if ( typeof parsed !== typeof initial ) {
+					return initial;
+				}
 			}
 			return parsed;
 		} catch {
