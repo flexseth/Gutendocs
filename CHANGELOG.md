@@ -7,6 +7,14 @@ All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
 ### Added
+- `FontSizePicker` component — preset font size selector with optional slider and custom input mirroring `@wordpress/components`
+  - Props: `fontSizes`, `value`, `onChange`, `withSlider`, `withReset`, `disableCustomFontSizes`, `units`, `label`, `className`
+  - Clicking an active preset deselects it, returning `undefined` to signal "use theme default"
+  - `font-size-picker.mdx` — three interactive persistent demos:
+    - `BasicDemo` — default presets with live text preview (key: `demo-fontsize-basic`)
+    - `CustomPresetsDemo` — heading-specific sizes with Reset (key: `demo-fontsize-presets`)
+    - `SliderDemo` — `withSlider` + `withReset` (key: `demo-fontsize-slider`)
+  - Registered in `MDXProvider`, barrel export, route `/docs/font-size-picker`, sidebar nav, and `docs.css`
 - `BoxControl` component — four-sided value editor (padding, margin, border-width) mirroring `@wordpress/components`
   - Props: `label`, `value`, `onChange`, `units`, `splitOnAxis`, `allowReset`, `resetValues`, `sides`, `className`
   - Linked/unlinked toggle syncs all four sides or edits each independently

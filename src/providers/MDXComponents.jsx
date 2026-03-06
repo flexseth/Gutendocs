@@ -68,6 +68,7 @@ const components = {
 	ColorPicker,
 	ComboboxControl,
 	Dropdown,
+	FontSizePicker,
 	FocalPointPicker,
 };
 

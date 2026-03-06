@@ -16,6 +16,7 @@ import BoxControlDocs from './docs/box-control.mdx';
 import BlockControlsDocs from './docs/block-controls.mdx';
 import ComboboxControlDocs from './docs/combobox-control.mdx';
 import DropdownDocs from './docs/dropdown.mdx';
+import FontSizePickerDocs from './docs/font-size-picker.mdx';
 import FocalPointPickerDocs from './docs/focal-point-picker.mdx';
 
 /**
@@ -42,6 +43,7 @@ export default function App() {
 				<Route path="/docs/block-controls" element={ <BlockControlsDocs /> } />
 				<Route path="/docs/combobox-control" element={ <ComboboxControlDocs /> } />
 				<Route path="/docs/dropdown" element={ <DropdownDocs /> } />
+				<Route path="/docs/font-size-picker" element={ <FontSizePickerDocs /> } />
 				<Route path="/docs/focal-point-picker" element={ <FocalPointPickerDocs /> } />
 			</Routes>
 		</DocLayout>
