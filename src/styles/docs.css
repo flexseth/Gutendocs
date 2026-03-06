@@ -1223,6 +1223,9 @@ body {
 .block-controls-demo__btn--active:hover {
 	background: #3730a3; /* Indigo-800 — elevated hover over active bg */
 	border-color: #3730a3;
+}
+
+/* ============================================================
    Dropdown
    ============================================================ */
 
