@@ -15,6 +15,30 @@ All notable changes to this project will be documented in this file.
     - `CustomPresetsDemo` — heading-specific sizes with Reset (key: `demo-fontsize-presets`)
     - `SliderDemo` — `withSlider` + `withReset` (key: `demo-fontsize-slider`)
   - Registered in `MDXProvider`, barrel export, route `/docs/font-size-picker`, sidebar nav, and `docs.css`
+- `BoxControl` component — four-sided value editor (padding, margin, border-width) mirroring `@wordpress/components`
+  - Props: `label`, `value`, `onChange`, `units`, `splitOnAxis`, `allowReset`, `resetValues`, `sides`, `className`
+  - Linked/unlinked toggle syncs all four sides or edits each independently
+  - `splitOnAxis` collapses inputs to Vertical / Horizontal pairs
+  - Unit picker (px, em, rem, %) applied across all sides simultaneously
+  - `box-control.mdx` — three interactive persistent demos:
+    - `PaddingDemo` — padding editor with live preview box (key: `demo-box-padding`)
+    - `BorderWidthDemo` — border-width editor with live bordered element (key: `demo-box-border`)
+    - `VerticalHorizontalDemo` — `splitOnAxis` mode for vertical/horizontal control (key: `demo-box-axes`)
+  - Registered in `MDXProvider`, barrel export, route `/docs/box-control`, sidebar nav, and `docs.css`
+- `FocalPointPicker` component — interactive image focal point selector mirroring `@wordpress/components`
+  - Props: `url`, `value`, `onChange`, `label`, `help`, `disabled`, `className`
+  - Click-and-drag crosshair on image; numeric X/Y inputs for precise control
+  - Touch-friendly (touchstart/touchmove events)
+  - `focal-point-picker.mdx` — three demos:
+    - `BasicDemo` — drag crosshair with live x/y readout (key: `demo-focal-basic`)
+    - `BackgroundDemo` — drives `background-position` with live preview (key: `demo-focal-bg`)
+    - `DisabledDemo` — static disabled state
+  - Registered in `MDXProvider`, barrel export, route `/docs/focal-point-picker`, sidebar nav, and `docs.css`
+- `BlockControls` component — block toolbar controls wrapper mirroring `@wordpress/block-editor`
+  - Props: `group`, `controls`, `children`, `className`
+  - Renders a toolbar group in the block editor toolbar above the selected block
+  - `block-controls.mdx` — usage examples and WordPress mapping
+  - Registered in `MDXProvider`, barrel export, route `/docs/block-controls`, sidebar nav, and `docs.css`
 - `Dropdown` component — composable dropdown with render-prop trigger and popover panel mirroring `@wordpress/components`
   - Props: `renderToggle`, `renderContent`, `popoverProps` (placement), `className`, `contentClassName`, `defaultOpen`, `onToggle`, `onClose`
   - Closes on outside click and Escape key; popover aligns via `placement` option
@@ -56,7 +80,14 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [1.5.0] - 2026-02-19
+## [1.8.1] - 2026-02-20
+
+### Changed
+- Renamed GitHub Copilot agent file from `my-agent.agent.md` to `MDX-Gutendocs-creator.md` to match the agent's `name` field
+
+---
+
+## [1.8.0] - 2026-02-19
 
 ### Added
 
@@ -75,10 +106,63 @@ All notable changes to this project will be documented in this file.
 
 ---
 
+## [1.7.2] - 2026-02-19
+
+### Fixed
+- Missing imports across components and doc pages
+
+---
+
+## [1.7.1] - 2026-02-19
+
+### Fixed
+- `RangeControl` slider touch targets for mobile accessibility — improved hit area and pointer handling to prevent accidental mis-taps on small screens
+
+---
+
+## [1.7.0] - 2026-02-19
+
+### Added
+- `DateTimePicker` component — date and time picker mirroring `@wordpress/components`
+  - Props: `label`, `value`, `onChange`, `currentDate` (WordPress block attribute alias), `is12Hour`, `help`, `disabled`, `className`, `dateOnly`, `timeOnly`
+  - Supports date-only, time-only, or combined date + time modes
+  - ISO 8601 string interface for full WordPress block attribute compatibility
+- `date-time-picker.mdx` — three interactive persistent demos:
+  - `BasicDemo` — full date + time picker (key: `demo-datetime-basic`)
+  - `DateOnlyDemo` — date-only mode (key: `demo-datetime-date-only`)
+  - `TimeOnlyDemo` — time-only mode (key: `demo-datetime-time-only`)
+- Registered in `MDXProvider`, barrel export, route `/docs/date-time-picker`, sidebar nav, and `docs.css`
+
+---
+
+## [1.6.0] - 2026-02-19
+
+### Added
+- `CodeBlock` — upgraded with full syntax highlighting via `prism-react-renderer` using the Night Owl theme
+- `CodeTabs` component — tabbed multi-language code viewer
+  - Props: `tabs` — array of `{ label, language, code }` objects
+  - Renders a tab bar for switching between code snippets; active tab highlighted
+- Both components registered globally in `MDXProvider`
+
+---
+
+## [1.5.0] - 2026-02-19
+
+### Added
+- `TextControl` component — single-line text input mirroring `@wordpress/components`
+  - Props: `label`, `value`, `onChange`, `help`, `placeholder`, `type`, `disabled`, `className`, `autoComplete`
+  - Controlled component; supports all standard HTML input types
+- `text-control.mdx` — three interactive persistent demos:
+  - `BasicDemo` — plain text input (key: `demo-text-basic`)
+  - `EmailDemo` — email type input (key: `demo-text-email`)
+  - `HeadingDemo` — dual inputs driving a live heading/subheading preview (keys: `demo-text-heading`, `demo-text-subheading`)
+- Registered in `MDXProvider`, barrel export, route `/docs/text-control`, sidebar nav, and `docs.css`
+
+---
+
 ## [1.4.0] - 2026-02-19
 
 ### Added
-
 - `RangeControl` component — numeric slider mirroring `@wordpress/components`
   - Props: `label`, `value`, `onChange`, `min`, `max`, `step`, `help`, `disabled`, `withInputField`, `className`
   - Paired numeric input field, min/max labels, keyboard accessible, focus-visible ring

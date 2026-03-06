@@ -1,4 +1,6 @@
 export { default as Alert } from './Alert';
+export { default as BoxControl } from './BoxControl';
+export { default as BlockControls } from './BlockControls';
 export { default as Button } from './Button';
 export { default as Card } from './Card';
 export { default as CheckboxControl } from './CheckboxControl';
@@ -15,3 +17,4 @@ export { default as ColorPicker } from './ColorPicker';
 export { default as ComboboxControl } from './ComboboxControl';
 export { default as Dropdown } from './Dropdown';
 export { default as FontSizePicker } from './FontSizePicker';
+export { default as FocalPointPicker } from './FocalPointPicker';
