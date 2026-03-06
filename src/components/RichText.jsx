@@ -22,8 +22,10 @@
  * @param {boolean}         [props.disabled=false]          - Disables editing.
  */
 import { useRef, useEffect, useState } from 'react';
+import DOMPurify from 'dompurify';
 
 const ALL_FORMATS = [ 'core/bold', 'core/italic', 'core/link' ];
+const ALLOWED_TAGS = [ 'p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'div', 'span' ];
 
 function FormatButton( { command, label, children, onFormat } ) {
 	return (
@@ -42,7 +44,7 @@ function FormatButton( { command, label, children, onFormat } ) {
 }
 
 export default function RichText( {
-	tagName: Tag = 'p',
+	tagName = 'p',
 	value = '',
 	onChange,
 	placeholder = '',
@@ -52,14 +54,16 @@ export default function RichText( {
 	style,
 	disabled = false,
 } ) {
+	const Tag = ALLOWED_TAGS.includes( tagName ) ? tagName : 'p';
 	const editableRef = useRef( null );
 	const [ isFocused, setIsFocused ] = useState( false );
 
 	// Sync external value changes without resetting cursor position.
 	useEffect( () => {
 		const el = editableRef.current;
-		if ( el && el.innerHTML !== value ) {
-			el.innerHTML = value || '';
+		const sanitized = DOMPurify.sanitize( value || '' );
+		if ( el && el.innerHTML !== sanitized ) {
+			el.innerHTML = sanitized;
 		}
 	}, [ value ] );
 
@@ -133,16 +137,17 @@ export default function RichText( {
  * @param {Object} [props.style]      - Inline styles.
  */
 RichText.Content = function RichTextContent( {
-	tagName: Tag = 'p',
+	tagName = 'p',
 	value = '',
 	className = '',
 	style,
 } ) {
+	const Tag = ALLOWED_TAGS.includes( tagName ) ? tagName : 'p';
 	return (
 		<Tag
 			className={ className || undefined }
 			style={ style }
-			dangerouslySetInnerHTML={ { __html: value } }
+			dangerouslySetInnerHTML={ { __html: DOMPurify.sanitize( value ) } }
 		/>
 	);
 };
