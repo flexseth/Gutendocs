@@ -38,16 +38,53 @@ All components mirror their `@wordpress/components` counterparts and are availab
 | Component | Description | Docs |
 |---|---|---|
 | `Alert` | Callout with `info`, `warning`, `success`, `error` variants | `/docs/alert` |
+| `BaseControl` | Foundational wrapper for custom form controls | `/docs/base-control` |
+| `BlockControls` | Visual simulation of the WordPress BlockControls toolbar slot | `/docs/block-controls` |
+| `BoxControl` | Four-sided padding/margin/border control for CSS box model properties | `/docs/box-control` |
 | `Button` | Primary / secondary / outline, three sizes | `/docs/button` |
+| `ButtonGroup` | Groups related buttons visually into a single cohesive unit | `/docs/button-group` |
 | `Card` | Bordered container with optional title | `/docs/card` |
+| `CheckboxControl` | Checkbox input for boolean and multi-select settings | `/docs/checkbox-control` |
 | `CodeBlock` | Syntax-highlighted code with Night Owl theme | — |
 | `CodeTabs` | Tabbed multi-language code viewer | — |
-| `ToggleControl` | Boolean toggle switch | `/docs/toggle-control` |
-| `SelectControl` | Dropdown select | `/docs/select-control` |
-| `RangeControl` | Numeric slider with paired input field | `/docs/range-control` |
-| `TextControl` | Single-line text input | `/docs/text-control` |
-| `DateTimePicker` | Date/time picker with `dateOnly` / `timeOnly` modes | `/docs/date-time-picker` |
 | `ColorPalette` | Color swatch grid with optional custom picker | `/docs/color-palette` |
+| `ColorPicker` | Free-form color input with spectrum canvas and hex text input | `/docs/color-picker` |
+| `ComboboxControl` | Searchable autocomplete dropdown for selecting from long option lists | `/docs/combobox-control` |
+| `CustomSelectControl` | Improved custom select dropdown with keyboard navigation | `/docs/custom-select-control` |
+| `DateTimePicker` | Date/time picker with `dateOnly` / `timeOnly` modes | `/docs/date-time-picker` |
+| `Dropdown` | Composable dropdown with a custom trigger and floating panel | `/docs/dropdown` |
+| `DropdownMenu` | Pre-built dropdown menu with trigger button and controls array | `/docs/dropdown-menu` |
+| `Flex` / `FlexItem` / `FlexBlock` | CSS flexbox layout helper components | `/docs/flex` |
+| `FocalPointPicker` | Image with a draggable crosshair to set a focal point | `/docs/focal-point-picker` |
+| `FontSizePicker` | Font size selector with preset buttons and optional custom input | `/docs/font-size-picker` |
+| `FormTokenField` | Multi-value token/tag input with optional autocomplete suggestions | `/docs/form-token-field` |
+| `Guide` | Multi-step tutorial modal that walks users through a series of pages | `/docs/guide` |
+| `InspectorControls` | Visual simulation of the WordPress InspectorControls sidebar slot | `/docs/inspector-controls` |
+| `MediaUpload` | Simulated media upload component with a render-prop interface | `/docs/media-upload` |
+| `Modal` | Focus-trapped dialog overlay for confirmations, forms, and settings | `/docs/modal` |
+| `Notice` | Contextual status notice with optional dismiss button | `/docs/notice` |
+| `NumberControl` | Numeric text input with increment/decrement spin buttons | `/docs/number-control` |
+| `PanelBody` | Collapsible panel section with a clickable title header | `/docs/panel-body` |
+| `Placeholder` | Empty-state UI container for blocks that have not been configured | `/docs/placeholder` |
+| `Popover` | Floating container anchored to a reference element | `/docs/popover` |
+| `PropsTable` | Renders a props documentation table from structured data | — |
+| `RadioControl` | Radio button group for selecting a single option from a set | `/docs/radio-control` |
+| `RangeControl` | Numeric slider with paired input field | `/docs/range-control` |
+| `RichText` | Editable rich text field with inline formatting controls | `/docs/rich-text` |
+| `SearchControl` | Search input with a clear (×) button | `/docs/search-control` |
+| `SelectControl` | Dropdown select | `/docs/select-control` |
+| `Snackbar` | Brief, dismissible toast notification | `/docs/snackbar` |
+| `Spacer` | Flexible spacing utility for controlled gaps between elements | `/docs/spacer` |
+| `Spinner` | Animated loading indicator for async operations | `/docs/spinner` |
+| `TabPanel` | Tab switcher with a callback-based render-prop API | `/docs/tab-panel` |
+| `Tabs` | Modern slot-based tab component (Tabs.TabList, Tabs.Tab, Tabs.TabPanel) | `/docs/tabs` |
+| `TextareaControl` | Multi-line text input for longer content | `/docs/textarea-control` |
+| `TextControl` | Single-line text input | `/docs/text-control` |
+| `ToggleControl` | Boolean toggle switch | `/docs/toggle-control` |
+| `ToggleGroupControl` / `ToggleGroupControlOption` / `ToggleGroupControlOptionIcon` | Radio-style group of toggle buttons | `/docs/toggle-group-control` |
+| `ToolsPanel` / `ToolsPanelItem` | Sidebar panel that lets users show/hide individual controls | `/docs/tools-panel` |
+| `Tooltip` | Hover-triggered tooltip wrapper | `/docs/tooltip` |
+| `UnitControl` | Numeric input paired with a unit selector for CSS dimension values | `/docs/unit-control` |
 
 ## Features
 
