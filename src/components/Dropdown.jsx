@@ -1,93 +1,114 @@
 import { useState, useRef, useEffect } from 'react';
 
 /**
- * Composable dropdown with a custom trigger and popover panel.
+ * Composable dropdown with a custom trigger and floating panel.
  *
  * Mirrors the WordPress `Dropdown` component from `@wordpress/components`.
- * Both the toggle button and popover content are provided as render props,
- * making this fully composable for any picker, menu, or contextual panel.
+ * Open/close state is managed internally. Both the trigger and the panel
+ * content are defined as render props, giving full control over their markup.
+ * Clicking outside the component or pressing Escape closes the panel.
  *
  * @param {Object}   props
- * @param {Function} props.renderToggle      - Render prop for the trigger element. Receives `{ isOpen, onToggle, onClose }`.
- * @param {Function} props.renderContent     - Render prop for the popover content. Receives `{ onToggle, onClose }`.
- * @param {string}   [props.className]       - Additional CSS class names on the wrapper.
- * @param {string}   [props.contentClassName] - Additional CSS class names on the popover panel.
- * @param {Object}   [props.popoverProps]    - Positioning options. Supports `placement`: 'bottom-start' | 'bottom-end' | 'bottom' (default).
- * @param {boolean}  [props.defaultOpen]     - Whether the dropdown starts open. Default false.
- * @param {Function} [props.onToggle]        - Callback fired with the new `isOpen` boolean when the dropdown toggles.
- * @param {Function} [props.onClose]         - Callback fired when the dropdown closes.
+ * @param {Function} props.renderToggle          - Render prop for the trigger element.
+ *                                                 Receives `{ isOpen, onToggle, onClose }`.
+ * @param {Function} props.renderContent         - Render prop for the panel content.
+ *                                                 Receives `{ onToggle, onClose }`.
+ * @param {string}   [props.position='bottom left'] - Panel placement relative to the trigger.
+ *                                                 Accepts 'bottom left', 'bottom right',
+ *                                                 'top left', 'top right'.
+ * @param {string}   [props.className='']        - Additional CSS classes on the wrapper element.
+ * @param {string}   [props.contentClassName=''] - Additional CSS classes on the panel element.
+ * @param {Function} [props.onToggle]            - Callback fired when open state changes; receives the new boolean.
+ * @param {Function} [props.onClose]             - Callback fired when the dropdown closes.
+ * @param {boolean}  [props.defaultOpen=false]   - Whether the dropdown starts in the open state.
  */
 export default function Dropdown( {
 	renderToggle,
 	renderContent,
+	position = 'bottom left',
 	className = '',
 	contentClassName = '',
-	popoverProps = {},
+	onToggle,
+	onClose,
 	defaultOpen = false,
-	onToggle: onToggleCallback,
-	onClose: onCloseCallback,
 } ) {
 	const [ isOpen, setIsOpen ] = useState( defaultOpen );
 	const wrapperRef = useRef( null );
 
-	const close = () => {
-		setIsOpen( false );
-		if ( onToggleCallback ) onToggleCallback( false );
-		if ( onCloseCallback ) onCloseCallback();
-	};
-
-	const toggle = () => {
-		const next = ! isOpen;
-		setIsOpen( next );
-		if ( onToggleCallback ) onToggleCallback( next );
-		if ( ! next && onCloseCallback ) onCloseCallback();
-	};
-
 	// Close on click outside.
 	useEffect( () => {
 		if ( ! isOpen ) return;
-		const handleOutside = ( event ) => {
+
+		const handleClickOutside = ( event ) => {
 			if ( wrapperRef.current && ! wrapperRef.current.contains( event.target ) ) {
-				close();
+				handleClose();
 			}
 		};
-		document.addEventListener( 'mousedown', handleOutside );
-		return () => document.removeEventListener( 'mousedown', handleOutside );
-	}, [ isOpen ] ); // eslint-disable-line react-hooks/exhaustive-deps
 
-	// Close on Escape key.
-	useEffect( () => {
-		if ( ! isOpen ) return;
-		const handleKeyDown = ( event ) => {
-			if ( event.key === 'Escape' ) close();
+		const handleEscape = ( event ) => {
+			if ( event.key === 'Escape' ) {
+				handleClose();
+			}
 		};
-		document.addEventListener( 'keydown', handleKeyDown );
-		return () => document.removeEventListener( 'keydown', handleKeyDown );
-	}, [ isOpen ] ); // eslint-disable-line react-hooks/exhaustive-deps
 
-	// Derive popover alignment class from placement prop.
-	const placement = popoverProps.placement || 'bottom-start';
-	const placementClass = `dropdown__popover--${ placement.replace( '-', '_' ) }`;
+		document.addEventListener( 'mousedown', handleClickOutside );
+		document.addEventListener( 'keydown', handleEscape );
+
+		return () => {
+			document.removeEventListener( 'mousedown', handleClickOutside );
+			document.removeEventListener( 'keydown', handleEscape );
+		};
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [ isOpen ] );
+
+	/**
+	 * Toggle the open state and fire the optional onToggle callback.
+	 */
+	const handleToggle = () => {
+		const nextOpen = ! isOpen;
+		setIsOpen( nextOpen );
+		if ( onToggle ) {
+			onToggle( nextOpen );
+		}
+		if ( ! nextOpen && onClose ) {
+			onClose();
+		}
+	};
+
+	/**
+	 * Close the dropdown and fire the optional onClose callback.
+	 */
+	const handleClose = () => {
+		setIsOpen( false );
+		if ( onToggle ) {
+			onToggle( false );
+		}
+		if ( onClose ) {
+			onClose();
+		}
+	};
+
+	// Derive BEM modifier from the position string (e.g. 'bottom left' → 'bottom-left').
+	const positionModifier = position.replace( ' ', '-' );
+
+	const contentClass = [
+		'dropdown__content',
+		`dropdown__content--${ positionModifier }`,
+		contentClassName,
+	]
+		.filter( Boolean )
+		.join( ' ' );
+
+	const wrapperClass = [ 'dropdown', className ].filter( Boolean ).join( ' ' );
 
 	return (
-		<div
-			ref={ wrapperRef }
-			className={ `dropdown${ className ? ` ${ className }` : '' }` }
-		>
-			{ renderToggle( { isOpen, onToggle: toggle, onClose: close } ) }
-
+		<div ref={ wrapperRef } className={ wrapperClass }>
+			<div className="dropdown__trigger">
+				{ renderToggle( { isOpen, onToggle: handleToggle, onClose: handleClose } ) }
+			</div>
 			{ isOpen && (
-				<div
-					className={ [
-						'dropdown__popover',
-						placementClass,
-						contentClassName,
-					]
-						.filter( Boolean )
-						.join( ' ' ) }
-					role="dialog"
-				>
-					{ renderContent( { onToggle: toggle, onClose: close } ) }
+				<div className={ contentClass }>
+					{ renderContent( { onToggle: handleToggle, onClose: handleClose } ) }
 				</div>
 			) }
 		</div>

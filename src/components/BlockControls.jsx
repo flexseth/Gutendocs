@@ -1,32 +1,23 @@
 /**
- * Simulates the WordPress BlockControls slot for documentation purposes.
+ * Visual simulation of the WordPress BlockControls toolbar slot.
  *
- * In a real block, `BlockControls` from `@wordpress/block-editor` renders its
- * children into the block toolbar via WordPress's slot/fill mechanism — it does
- * not render a visible wrapper itself. This docs component renders a styled
- * toolbar preview so examples are visible outside the block editor.
+ * Mirrors the WordPress `BlockControls` component from `@wordpress/block-editor`.
+ * In the real block editor this is a Slot/Fill that inserts children into the
+ * floating block toolbar. Here it renders an inline toolbar bar so the
+ * documentation demos can show what the toolbar looks like.
  *
  * @param {Object}          props
- * @param {string}          [props.group]     - Slot group: 'default' | 'block' | 'inline' | 'other' | 'parent'. Default 'default'.
- * @param {React.ReactNode} [props.children]  - Toolbar controls to render inside the group.
- * @param {string}          [props.className] - Additional CSS class names.
+ * @param {React.ReactNode} props.children   - ToolbarGroup / ToolbarButton children.
+ * @param {string}          [props.group='default'] - Toolbar slot group label.
+ * @param {string}          [props.className='']    - Additional CSS class names.
  */
-export default function BlockControls( {
-	group = 'default',
-	children,
-	className = '',
-} ) {
+export default function BlockControls( { children, group = 'default', className = '' } ) {
+	const groupClass = group !== 'default' ? ` block-controls--${ group }` : '';
+	const classes = [ 'block-controls', groupClass, className ].filter( Boolean ).join( ' ' );
+
 	return (
-		<div className={ `block-controls${ className ? ` ${ className }` : '' }` }>
-			<div className="block-controls__header">
-				<span className="block-controls__label">Block Toolbar</span>
-				<span className="block-controls__group-badge">group: { group }</span>
-			</div>
-			<div
-				className={ `block-controls__toolbar block-controls__toolbar--${ group }` }
-				role="toolbar"
-				aria-label="Block toolbar"
-			>
+		<div className={ classes } role="toolbar" aria-label="Block controls toolbar">
+			<div className="block-controls__toolbar">
 				{ children }
 			</div>
 		</div>

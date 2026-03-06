@@ -1,269 +1,242 @@
 import Dropdown from '../components/Dropdown';
+import Button from '../components/Button';
 import { useLocalStorage } from '../hooks/useLocalStorage';
 
-export const STYLE_OPTIONS = [
-  { value: 'classic', label: 'Classic' },
-  { value: 'modern',  label: 'Modern'  },
-  { value: 'minimal', label: 'Minimal' },
-  { value: 'bold',    label: 'Bold'    },
-];
-
-export const ICON_OPTIONS = [
-  { value: 'star',    symbol: '★', label: 'Star'    },
-  { value: 'heart',   symbol: '♥', label: 'Heart'   },
-  { value: 'check',   symbol: '✓', label: 'Check'   },
-  { value: 'flag',    symbol: '⚑', label: 'Flag'    },
-  { value: 'bolt',    symbol: '⚡', label: 'Bolt'    },
-  { value: 'moon',    symbol: '☾', label: 'Moon'    },
-  { value: 'sun',     symbol: '☀', label: 'Sun'     },
-  { value: 'diamond', symbol: '◆', label: 'Diamond' },
-  { value: 'circle',  symbol: '●', label: 'Circle'  },
-];
-
-export const SWATCH_COLORS = [
-  { value: '#ef4444', label: 'Red'    },
-  { value: '#f97316', label: 'Orange' },
-  { value: '#eab308', label: 'Yellow' },
-  { value: '#22c55e', label: 'Green'  },
-  { value: '#3b82f6', label: 'Blue'   },
-  { value: '#8b5cf6', label: 'Purple' },
-  { value: '#ec4899', label: 'Pink'   },
-  { value: '#64748b', label: 'Slate'  },
-];
-
-export const StyleMenuDemo = () => {
-  const [style, setStyle] = useLocalStorage('demo-dropdown-style', null);
-  const selected = STYLE_OPTIONS.find((o) => o.value === style);
+export const BasicDropdownDemo = () => {
+  const [selected, setSelected] = useLocalStorage('demo-dropdown-selected', '');
+  const options = ['Classic', 'Modern', 'Minimal'];
   return (
-    <div>
+    <div style={{ position: 'relative', display: 'inline-block' }}>
       <Dropdown
         renderToggle={({ isOpen, onToggle }) => (
-          <button
-            className="dropdown-demo-toggle"
+          <Button
+            variant="secondary"
             onClick={onToggle}
-            aria-expanded={isOpen}
           >
-            { selected ? selected.label : 'Choose style' } <span aria-hidden="true">▾</span>
-          </button>
+            {selected ? selected : 'Choose Style'} {isOpen ? '▲' : '▼'}
+          </Button>
         )}
         renderContent={({ onClose }) => (
-          <ul className="dropdown-demo-menu" role="menu">
-            { STYLE_OPTIONS.map((opt) => (
-              <li key={opt.value} role="none">
+          <ul className="dropdown-demo__menu">
+            {options.map((option) => (
+              <li key={option}>
                 <button
-                  className={`dropdown-demo-menu-item${style === opt.value ? ' dropdown-demo-menu-item--selected' : ''}`}
-                  role="menuitemradio"
-                  aria-checked={style === opt.value}
-                  onClick={() => { setStyle(opt.value); onClose(); }}
+                  type="button"
+                  className={`dropdown-demo__item${selected === option ? ' dropdown-demo__item--selected' : ''}`}
+                  onClick={() => {
+                    setSelected(option);
+                    onClose();
+                  }}
                 >
-                  { style === opt.value && <span aria-hidden="true">✓ </span> }
-                  { opt.label }
+                  {option}
                 </button>
               </li>
-            )) }
+            ))}
           </ul>
         )}
       />
-      { style && (
-        <p style={{ marginTop: '0.75rem', fontSize: '0.9375rem', color: '#1e293b' }}>
-          Selected style: <strong>{ selected?.label }</strong>
+      {selected && (
+        <p style={{ marginTop: '0.75rem', fontSize: '0.875rem', color: '#475569' }}>
+          Selected style: <strong>{selected}</strong>
         </p>
-      ) }
+      )}
     </div>
   );
 };
 
-export const IconPickerDemo = () => {
-  const [icon, setIcon] = useLocalStorage('demo-dropdown-icon', null);
-  const selected = ICON_OPTIONS.find((o) => o.value === icon);
+export const ColorDropdownDemo = () => {
+  const [color, setColor] = useLocalStorage('demo-dropdown-color', '');
+  const swatches = [
+    { label: 'Red', value: '#ef4444' },
+    { label: 'Blue', value: '#3b82f6' },
+    { label: 'Green', value: '#22c55e' },
+    { label: 'Purple', value: '#a855f7' },
+    { label: 'Orange', value: '#f97316' },
+    { label: 'Pink', value: '#ec4899' },
+  ];
   return (
-    <div>
+    <div style={{ position: 'relative', display: 'inline-block' }}>
       <Dropdown
         renderToggle={({ isOpen, onToggle }) => (
-          <button
-            className="dropdown-demo-toggle"
-            onClick={onToggle}
-            aria-expanded={isOpen}
-          >
-            { selected
-              ? <><span style={{ fontSize: '1.125rem' }}>{ selected.symbol }</span> { selected.label }</>
-              : 'Pick an icon'
-            }
-            { ' ' }<span aria-hidden="true">▾</span>
-          </button>
-        )}
-        renderContent={({ onClose }) => (
-          <div className="dropdown-demo-icon-grid" role="menu" aria-label="Icon picker">
-            { ICON_OPTIONS.map((opt) => (
-              <button
-                key={opt.value}
-                className={`dropdown-demo-icon-btn${icon === opt.value ? ' dropdown-demo-icon-btn--selected' : ''}`}
-                role="menuitem"
-                aria-label={opt.label}
-                title={opt.label}
-                onClick={() => { setIcon(opt.value); onClose(); }}
-              >
-                { opt.symbol }
-              </button>
-            )) }
-          </div>
-        )}
-      />
-      { selected && (
-        <div style={{ marginTop: '0.75rem', fontSize: '2.5rem', lineHeight: 1 }}>
-          { selected.symbol }
-        </div>
-      ) }
-    </div>
-  );
-};
-
-export const ColorSwatchDemo = () => {
-  const [color, setColor] = useLocalStorage('demo-dropdown-color', null);
-  return (
-    <div>
-      <Dropdown
-        popoverProps={{ placement: 'bottom-start' }}
-        renderToggle={({ isOpen, onToggle }) => (
-          <button
-            className="dropdown-demo-toggle"
-            onClick={onToggle}
-            aria-expanded={isOpen}
-            aria-label="Choose accent color"
-          >
-            <span
-              style={{
-                display: 'inline-block',
-                width: '1rem',
-                height: '1rem',
-                borderRadius: '50%',
-                backgroundColor: color || '#cbd5e1',
-                border: '1px solid rgba(0,0,0,0.15)',
-                verticalAlign: 'middle',
-                marginRight: '0.375rem',
-              }}
-              aria-hidden="true"
-            />
-            Accent color <span aria-hidden="true">▾</span>
-          </button>
-        )}
-        renderContent={({ onClose }) => (
-          <div className="dropdown-demo-swatches" role="menu" aria-label="Color palette">
-            { SWATCH_COLORS.map((c) => (
-              <button
-                key={c.value}
-                className={`dropdown-demo-swatch${color === c.value ? ' dropdown-demo-swatch--selected' : ''}`}
-                style={{ backgroundColor: c.value }}
-                role="menuitem"
-                aria-label={c.label}
-                title={c.label}
-                onClick={() => { setColor(c.value); onClose(); }}
+          <Button variant="secondary" onClick={onToggle}>
+            <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+              <span
+                style={{
+                  display: 'inline-block',
+                  width: '14px',
+                  height: '14px',
+                  borderRadius: '50%',
+                  backgroundColor: color || '#cbd5e1',
+                  border: '1px solid rgba(0,0,0,0.15)',
+                  flexShrink: 0,
+                }}
               />
-            )) }
+              {color ? swatches.find(s => s.value === color)?.label ?? 'Custom' : 'Accent Color'}
+              {isOpen ? ' ▲' : ' ▼'}
+            </span>
+          </Button>
+        )}
+        renderContent={({ onClose }) => (
+          <div className="dropdown-demo__swatch-grid">
+            {swatches.map(({ label, value }) => (
+              <button
+                key={value}
+                type="button"
+                className={`dropdown-demo__swatch${color === value ? ' dropdown-demo__swatch--selected' : ''}`}
+                style={{ backgroundColor: value }}
+                aria-label={label}
+                onClick={() => {
+                  setColor(value);
+                  onClose();
+                }}
+              />
+            ))}
           </div>
         )}
       />
-      { color && (
-        <div style={{
-          marginTop: '0.75rem',
-          padding: '0.75rem 1rem',
-          borderLeft: `4px solid ${color}`,
-          background: '#f8fafc',
-          borderRadius: '0 0.375rem 0.375rem 0',
-          fontSize: '0.9375rem',
-        }}>
-          Block with <code>{ color }</code> accent border
-        </div>
-      ) }
+      {color && (
+        <p style={{ marginTop: '0.75rem', fontSize: '0.875rem', color: '#475569' }}>
+          Accent color: <strong style={{ color }}>{color}</strong>
+        </p>
+      )}
+    </div>
+  );
+};
+
+export const PositionDropdownDemo = () => {
+  const [variant, setVariant] = useLocalStorage('demo-dropdown-variant', 'default');
+  const variants = ['default', 'featured', 'minimal'];
+  return (
+    <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+      <div style={{ position: 'relative', display: 'inline-block' }}>
+        <Dropdown
+          position="bottom right"
+          renderToggle={({ isOpen, onToggle }) => (
+            <Button variant="secondary" onClick={onToggle}>
+              Variant: {variant.charAt(0).toUpperCase() + variant.slice(1)} {isOpen ? '▲' : '▼'}
+            </Button>
+          )}
+          renderContent={({ onClose }) => (
+            <ul className="dropdown-demo__menu">
+              {variants.map((v) => (
+                <li key={v}>
+                  <button
+                    type="button"
+                    className={`dropdown-demo__item${variant === v ? ' dropdown-demo__item--selected' : ''}`}
+                    onClick={() => {
+                      setVariant(v);
+                      onClose();
+                    }}
+                  >
+                    {v.charAt(0).toUpperCase() + v.slice(1)}
+                  </button>
+                </li>
+              ))}
+            </ul>
+          )}
+        />
+      </div>
     </div>
   );
 };
 
 # Dropdown
 
-A composable dropdown with a custom trigger and popover panel. Mirrors the WordPress [`Dropdown`](https://developer.wordpress.org/block-editor/reference-guides/components/dropdown/) from `@wordpress/components`.
+A fully composable trigger-and-panel component for custom pickers, menus, and contextual actions. Mirrors the WordPress [`Dropdown`](https://developer.wordpress.org/block-editor/reference-guides/components/dropdown/) from `@wordpress/components`.
 
-Both the toggle button and the panel content are provided as render props — making `Dropdown` fully composable for menus, icon pickers, color selectors, and any other popover UI.
+## Basic Usage
 
-## Style Menu
+Select a style from the menu. The chosen value persists across page reloads.
 
-Click the button, select an option, and Escape or click outside to close.
-
-<StyleMenuDemo />
+<BasicDropdownDemo />
 
 ```jsx
 <Dropdown
-  renderToggle={ ( { isOpen, onToggle } ) => (
-    <Button variant="secondary" onClick={ onToggle } aria-expanded={ isOpen }>
-      { style || __( 'Choose style', 'your-text-domain' ) } ▾
+  renderToggle={({ isOpen, onToggle }) => (
+    <Button
+      variant="secondary"
+      onClick={onToggle}
+      aria-expanded={isOpen}
+    >
+      {style || 'Choose Style'}
     </Button>
-  ) }
-  renderContent={ ( { onClose } ) => (
-    <MenuGroup>
-      { [ 'Classic', 'Modern', 'Minimal' ].map( ( option ) => (
-        <MenuItem
-          key={ option }
-          isSelected={ style === option }
-          role="menuitemradio"
-          onClick={ () => { setAttributes( { style: option } ); onClose(); } }
-        >
-          { option }
-        </MenuItem>
-      ) ) }
-    </MenuGroup>
-  ) }
+  )}
+  renderContent={({ onClose }) => (
+    <ul>
+      {['Classic', 'Modern', 'Minimal'].map((option) => (
+        <li key={option}>
+          <button
+            onClick={() => {
+              setAttributes({ style: option });
+              onClose();
+            }}
+          >
+            {option}
+          </button>
+        </li>
+      ))}
+    </ul>
+  )}
 />
 ```
 
-## Icon Picker
+## Color Swatch Picker
 
-<IconPickerDemo />
+A swatch-grid inside the panel demonstrates that `renderContent` can render any arbitrary JSX — not just a list of text items.
+
+<ColorDropdownDemo />
 
 ```jsx
 <Dropdown
-  renderToggle={ ( { isOpen, onToggle } ) => (
-    <Button variant="secondary" onClick={ onToggle } aria-expanded={ isOpen }>
-      { __( 'Pick an icon', 'your-text-domain' ) }
+  renderToggle={({ isOpen, onToggle }) => (
+    <Button variant="secondary" onClick={onToggle} aria-expanded={isOpen}>
+      <span style={{ background: accentColor }} className="swatch" />
+      Accent Color
     </Button>
-  ) }
-  renderContent={ ( { onClose } ) => (
-    <div style={ { display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '4px', padding: '8px' } }>
-      { ICONS.map( ( { name, icon } ) => (
-        <Button
-          key={ name }
-          icon={ icon }
-          label={ name }
-          isPressed={ selectedIcon === name }
-          onClick={ () => { setAttributes( { selectedIcon: name } ); onClose(); } }
+  )}
+  renderContent={({ onClose }) => (
+    <div className="swatch-grid">
+      {COLORS.map(({ label, value }) => (
+        <button
+          key={value}
+          style={{ backgroundColor: value }}
+          aria-label={label}
+          onClick={() => {
+            setAttributes({ accentColor: value });
+            onClose();
+          }}
         />
-      ) ) }
+      ))}
     </div>
-  ) }
+  )}
 />
 ```
 
-## Color Swatch Dropdown
+## Right-Aligned Panel
 
-<ColorSwatchDemo />
+Pass `position="bottom right"` to anchor the panel to the right edge of the trigger. Useful inside toolbars or right-aligned sidebar controls.
+
+<PositionDropdownDemo />
 
 ```jsx
 <Dropdown
-  popoverProps={ { placement: 'bottom-start' } }
-  renderToggle={ ( { isOpen, onToggle } ) => (
-    <Button variant="secondary" onClick={ onToggle } aria-expanded={ isOpen }>
-      <span style={ { backgroundColor: accentColor } } />
-      { __( 'Accent color', 'your-text-domain' ) }
+  position="bottom right"
+  renderToggle={({ isOpen, onToggle }) => (
+    <Button variant="secondary" onClick={onToggle} aria-expanded={isOpen}>
+      Variant: {variant}
     </Button>
-  ) }
-  renderContent={ () => (
-    <div style={ { padding: '8px' } }>
-      <ColorPalette
-        colors={ COLORS }
-        value={ accentColor }
-        onChange={ ( value ) => setAttributes( { accentColor: value } ) }
-      />
-    </div>
-  ) }
+  )}
+  renderContent={({ onClose }) => (
+    <ul>
+      {['default', 'featured', 'minimal'].map((v) => (
+        <li key={v}>
+          <button onClick={() => { setAttributes({ variant: v }); onClose(); }}>
+            {v}
+          </button>
+        </li>
+      ))}
+    </ul>
+  )}
 />
 ```
 
@@ -271,44 +244,52 @@ Click the button, select an option, and Escape or click outside to close.
 
 ```jsx
 import { __ } from '@wordpress/i18n';
-import { useBlockProps } from '@wordpress/block-editor';
 import { Dropdown, Button, MenuGroup, MenuItem } from '@wordpress/components';
+import { useBlockProps, InspectorControls } from '@wordpress/block-editor';
+import { PanelBody } from '@wordpress/components';
 
 export default function Edit( { attributes, setAttributes } ) {
   const blockProps = useBlockProps();
   const { style } = attributes;
 
   return (
-    <div { ...blockProps }>
-      <Dropdown
-        renderToggle={ ( { isOpen, onToggle } ) => (
-          <Button
-            variant="secondary"
-            onClick={ onToggle }
-            aria-expanded={ isOpen }
-          >
-            { style || __( 'Choose style', 'your-text-domain' ) }
-          </Button>
-        ) }
-        renderContent={ ( { onClose } ) => (
-          <MenuGroup>
-            { [ 'Classic', 'Modern', 'Minimal' ].map( ( option ) => (
-              <MenuItem
-                key={ option }
-                isSelected={ style === option }
-                role="menuitemradio"
-                onClick={ () => {
-                  setAttributes( { style: option } );
-                  onClose();
-                } }
+    <>
+      <InspectorControls>
+        <PanelBody title={ __( 'Style', 'your-text-domain' ) }>
+          <Dropdown
+            renderToggle={ ( { isOpen, onToggle } ) => (
+              <Button
+                variant="secondary"
+                onClick={ onToggle }
+                aria-expanded={ isOpen }
               >
-                { option }
-              </MenuItem>
-            ) ) }
-          </MenuGroup>
-        ) }
-      />
-    </div>
+                { style || __( 'Choose style', 'your-text-domain' ) }
+              </Button>
+            ) }
+            renderContent={ ( { onClose } ) => (
+              <MenuGroup>
+                { [ 'Classic', 'Modern', 'Minimal' ].map( ( option ) => (
+                  <MenuItem
+                    key={ option }
+                    isSelected={ style === option }
+                    role="menuitemradio"
+                    onClick={ () => {
+                      setAttributes( { style: option } );
+                      onClose();
+                    } }
+                  >
+                    { option }
+                  </MenuItem>
+                ) ) }
+              </MenuGroup>
+            ) }
+          />
+        </PanelBody>
+      </InspectorControls>
+      <div { ...blockProps } className={ `style-${ style }` }>
+        { __( 'Block content', 'your-text-domain' ) }
+      </div>
+    </>
   );
 }
 ```
@@ -318,8 +299,7 @@ export default function Edit( { attributes, setAttributes } ) {
 ```json
 {
   "attributes": {
-    "style":       { "type": "string", "default": "" },
-    "selectedIcon": { "type": "string", "default": "" },
+    "style": { "type": "string", "default": "" },
     "accentColor": { "type": "string", "default": "" }
   }
 }
@@ -333,59 +313,61 @@ export default function Edit( { attributes, setAttributes } ) {
     type: 'function',
     default: '',
     required: true,
-    description: 'Render prop for the trigger element. Receives { isOpen, onToggle, onClose }.'
+    description: 'Render prop for the trigger element. Receives { isOpen, onToggle, onClose } and must return JSX.'
   },
   {
     name: 'renderContent',
     type: 'function',
     default: '',
     required: true,
-    description: 'Render prop for the popover content. Receives { onToggle, onClose }.'
+    description: 'Render prop for the panel content. Receives { onToggle, onClose } and must return JSX.'
   },
   {
-    name: 'popoverProps',
-    type: 'object',
-    default: '{}',
+    name: 'position',
+    type: "'bottom left' | 'bottom right' | 'top left' | 'top right'",
+    default: "'bottom left'",
     required: false,
-    description: "Positioning options passed to the popover. Supports placement: 'bottom-start' | 'bottom-end' | 'bottom'."
+    description: 'Controls which corner of the trigger the panel is anchored to.'
   },
   {
     name: 'className',
     type: 'string',
     default: "''",
     required: false,
-    description: 'Additional CSS class names on the wrapper element.'
+    description: 'Additional CSS classes on the outermost wrapper element.'
   },
   {
     name: 'contentClassName',
     type: 'string',
     default: "''",
     required: false,
-    description: 'Additional CSS class names on the popover panel.'
-  },
-  {
-    name: 'defaultOpen',
-    type: 'boolean',
-    default: 'false',
-    required: false,
-    description: 'Whether the dropdown starts open.'
+    description: 'Additional CSS classes applied directly to the floating panel element.'
   },
   {
     name: 'onToggle',
     type: 'function',
     default: '',
     required: false,
-    description: 'Callback fired with the new isOpen boolean whenever the dropdown opens or closes.'
+    description: 'Callback fired when the open state changes. Receives the new boolean value.'
   },
   {
     name: 'onClose',
     type: 'function',
     default: '',
     required: false,
-    description: 'Callback fired when the dropdown closes.'
+    description: 'Callback fired whenever the dropdown closes, regardless of the trigger.'
+  },
+  {
+    name: 'defaultOpen',
+    type: 'boolean',
+    default: 'false',
+    required: false,
+    description: 'Whether the dropdown starts in the open state on first render.'
   }
 ]} />
 
 ## WordPress Mapping
 
-In WordPress, `Dropdown` is imported from `@wordpress/components`. The `renderToggle` and `renderContent` render props give full control over both the trigger and the panel — there is no default button or list. Always pass `aria-expanded={ isOpen }` on the toggle element. Inside `renderContent`, call `onClose()` after an action (e.g. selecting a menu item) to close the dropdown. For a simple list menu, combine `Dropdown` with `MenuGroup` and `MenuItem`. For toolbar menus, wrap the toggle in `ToolbarButton` and place the `Dropdown` inside a `ToolbarGroup` within `BlockControls`. `Dropdown` is editor-only and must never appear in `save.js`.
+In WordPress, `Dropdown` is imported from `@wordpress/components` and is editor-only — never use it in `save.js`. The real component wraps its panel in a `Popover`, so the panel floats above the page and is not clipped by parent `overflow: hidden` containers. This custom implementation uses `position: absolute` relative to the trigger wrapper, which is adequate for demos but differs from the native behavior in the block editor.
+
+Always pass `aria-expanded={isOpen}` to the trigger element from `renderToggle` — the real component does not add this automatically, so accessibility depends on the consumer. Inside `renderContent`, use `MenuItem` with `MenuGroup` for list-style menus and always call `onClose()` after the user makes a selection so the panel closes at the right time. For simple text selects, prefer `SelectControl`; for icon-button menus in the toolbar, prefer `DropdownMenu`.

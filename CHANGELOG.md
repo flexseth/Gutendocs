@@ -4,57 +4,116 @@ All notable changes to this project will be documented in this file.
 
 ---
 
-## [Unreleased]
+## [2.0.0] - 2026-03-06
 
 ### Added
-- `BoxControl` component — four-sided value editor (padding, margin, border-width) mirroring `@wordpress/components`
-  - Props: `label`, `value`, `onChange`, `units`, `splitOnAxis`, `allowReset`, `resetValues`, `sides`, `className`
-  - Linked/unlinked toggle syncs all four sides or edits each independently
-  - `splitOnAxis` collapses inputs to Vertical / Horizontal pairs
-  - Unit picker (px, em, rem, %) applied across all sides simultaneously
-  - `box-control.mdx` — three interactive persistent demos:
-    - `PaddingDemo` — padding editor with live preview box (key: `demo-box-padding`)
-    - `BorderWidthDemo` — border-width editor with live bordered element (key: `demo-box-border`)
-    - `VerticalHorizontalDemo` — `splitOnAxis` mode for vertical/horizontal control (key: `demo-box-axes`)
-  - Registered in `MDXProvider`, barrel export, route `/docs/box-control`, sidebar nav, and `docs.css`
-- `Dropdown` component — composable dropdown with render-prop trigger and popover panel mirroring `@wordpress/components`
-  - Props: `renderToggle`, `renderContent`, `popoverProps` (placement), `className`, `contentClassName`, `defaultOpen`, `onToggle`, `onClose`
-  - Closes on outside click and Escape key; popover aligns via `placement` option
-  - `dropdown.mdx` — three interactive persistent demos:
-    - `StyleMenuDemo` — text menu with checkmark on selected item (key: `demo-dropdown-style`)
-    - `IconPickerDemo` — 3×3 symbol grid picker with large preview (key: `demo-dropdown-icon`)
-    - `ColorSwatchDemo` — colored circle trigger opens an 8-swatch palette (key: `demo-dropdown-color`)
-  - Registered in `MDXProvider`, barrel export, route `/docs/dropdown`, sidebar nav, and `docs.css`
-- `ComboboxControl` component — searchable autocomplete dropdown mirroring `@wordpress/components`
-  - Props: `label`, `value`, `options`, `onChange`, `onFilterValueChange`, `help`, `isLoading`, `messages`, `className`
-  - Full keyboard navigation: arrow keys, Enter to select, Escape to close
-  - Built-in × clear button, chevron indicator, "no results" and loading states
-  - Filtering is parent-controlled via `onFilterValueChange` — supports both static and async (REST API) option lists
-  - `combobox-control.mdx` — three interactive persistent demos:
-    - `CountriesDemo` — 16-country list with client-side filtering (key: `demo-combobox-country`)
-    - `FontFamilyDemo` — font picker with live preview paragraph (key: `demo-combobox-font`)
-    - `NoResultsDemo` — custom empty state message (key: `demo-combobox-noresults`)
-  - Includes ComboboxControl vs SelectControl comparison table
-  - Registered in `MDXProvider`, barrel export, route `/docs/combobox-control`, sidebar nav, and `docs.css`
-- `ColorPicker` component — free-form color picker mirroring `@wordpress/components`
-  - Props: `color`, `onChange`, `enableAlpha`, `defaultValue`, `copyFormat`, `className`
-  - Spectrum proxy via native `<input type="color">` overlaid on a large preview swatch
-  - Optional opacity slider (`enableAlpha`) — `onChange` returns `rgba()` string when enabled
-  - Hex text input showing the current color code
-  - `color-picker.mdx` — three interactive persistent demos:
-    - `BasicDemo` — basic picker driving live text color preview (key: `demo-colorpicker-basic`)
-    - `AlphaDemo` — `enableAlpha` with checkerboard transparency visualization (key: `demo-colorpicker-alpha`)
-    - `ResetDemo` — picker with reset-to-default button and accent border preview (key: `demo-colorpicker-reset`)
-  - Includes ColorPicker vs ColorPalette comparison table
-  - Registered in `MDXProvider`, barrel export, route `/docs/color-picker`, sidebar nav, and `docs.css`
-- `CheckboxControl` component — labeled checkbox mirroring `@wordpress/components`
+
+#### Block Editor Components
+- `BlockControls` — block toolbar slot simulation mirroring `@wordpress/block-editor`
+  - Props: `group`, `children`, `className`
+  - Renders a labelled toolbar preview showing group name; in real WP this is a slot/fill
+  - Three interactive demos: alignment buttons, Bold/Italic/Underline toggles, style variant selector
+  - Registered in `MDXProvider`, barrel export, route `/docs/block-controls`, sidebar nav, and `docs.css`
+- `InspectorControls` — sidebar panel slot simulation mirroring `@wordpress/block-editor`
+  - Registered in `MDXProvider`, barrel export, route `/docs/inspector-controls`, sidebar nav
+- `RichText` — rich text editor field mirroring `@wordpress/block-editor`
+  - Registered in `MDXProvider`, barrel export, route `/docs/rich-text`, sidebar nav
+- `MediaUpload` — media library upload button mirroring `@wordpress/block-editor`
+  - Registered in `MDXProvider`, barrel export, route `/docs/media-upload`, sidebar nav
+
+#### Form Controls
+- `BaseControl` — labeled wrapper for custom form fields mirroring `@wordpress/components`
+  - Props: `label`, `help`, `id`, `className`, `children`
+  - Registered in `MDXProvider`, barrel export, route `/docs/base-control`, sidebar nav
+- `CheckboxControl` — labeled checkbox mirroring `@wordpress/components`
   - Props: `label`, `checked`, `onChange`, `help`, `indeterminate`, `disabled`, `className`, `id`
-  - `indeterminate` state applied via DOM ref (cannot be set as a JSX attribute); sets `aria-checked="mixed"` automatically
-  - `checkbox-control.mdx` — three interactive persistent demos:
-    - `BasicDemo` — single checkbox reveals a live title preview (key: `demo-checkbox-show-title`)
-    - `MultipleDemo` — three checkboxes drive a simulated post card with title, date, and excerpt (keys: `demo-checkbox-show-title-multi`, `demo-checkbox-show-excerpt`, `demo-checkbox-show-date`)
-    - `HelpTextDemo` — checkbox with `help` prop for lazy-load setting (key: `demo-checkbox-lazy-load`)
+  - `indeterminate` state applied via DOM ref; sets `aria-checked="mixed"` automatically
+  - Three interactive persistent demos: basic toggle, multiple checkboxes, help text variant
   - Registered in `MDXProvider`, barrel export, route `/docs/checkbox-control`, sidebar nav
+- `ComboboxControl` — searchable autocomplete dropdown mirroring `@wordpress/components`
+  - Props: `label`, `value`, `options`, `onChange`, `onFilterValueChange`, `help`, `isLoading`, `messages`, `className`
+  - Full keyboard navigation; built-in clear button, "no results" and loading states
+  - Three interactive persistent demos: countries list, font family picker, no-results state
+  - Registered in `MDXProvider`, barrel export, route `/docs/combobox-control`, sidebar nav, and `docs.css`
+- `CustomSelectControl` — custom-rendered select dropdown mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/custom-select-control`, sidebar nav
+- `DateTimePicker` — date and time picker mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/date-time-picker`, sidebar nav
+- `FormTokenField` — tag-style multi-value token input mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/form-token-field`, sidebar nav, and `docs.css`
+- `NumberControl` — numeric input with increment/decrement mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/number-control`, sidebar nav
+- `RadioControl` — radio button group mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/radio-control`, sidebar nav, and `docs.css`
+- `SearchControl` — search input field mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/search-control`, sidebar nav
+- `TextControl` — single-line text input mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/text-control`, sidebar nav
+- `TextareaControl` — multi-line textarea mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/textarea-control`, sidebar nav, and `docs.css`
+- `ToggleGroupControl` — segmented button group mirroring `@wordpress/components`
+  - Exports: `ToggleGroupControl`, `ToggleGroupControlOption`, `ToggleGroupControlOptionIcon`
+  - Registered in `MDXProvider`, barrel export, route `/docs/toggle-group-control`, sidebar nav
+- `UnitControl` — numeric input with unit selector mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/unit-control`, sidebar nav, and `docs.css`
+
+#### Layout & Composition
+- `BoxControl` — four-sided spacing control (top/right/bottom/left) mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/box-control`, sidebar nav
+- `Flex` — flexbox layout primitive mirroring `@wordpress/components`
+  - Exports: `Flex`, `FlexItem`, `FlexBlock`
+  - Registered in `MDXProvider`, barrel export, route `/docs/flex`, sidebar nav
+- `Spacer` — whitespace utility component mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/spacer`, sidebar nav
+- `ToolsPanel` — collapsible settings panel with reset support mirroring `@wordpress/components`
+  - Exports: `ToolsPanel`, `ToolsPanelItem`
+  - Registered in `MDXProvider`, barrel export, route `/docs/tools-panel`, sidebar nav
+
+#### Overlays & Navigation
+- `Dropdown` — composable dropdown with render-prop trigger and popover panel mirroring `@wordpress/components`
+  - Props: `renderToggle`, `renderContent`, `popoverProps`, `className`, `contentClassName`, `defaultOpen`, `onToggle`, `onClose`
+  - Closes on outside click and Escape key
+  - Three interactive persistent demos: style menu, icon picker, color swatch picker
+  - Registered in `MDXProvider`, barrel export, route `/docs/dropdown`, sidebar nav, and `docs.css`
+- `DropdownMenu` — icon-triggered dropdown menu mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/dropdown-menu`, sidebar nav
+- `Guide` — multi-step modal guide mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/guide`, sidebar nav
+- `Modal` — accessible dialog overlay mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/modal`, sidebar nav, and `docs.css`
+- `Popover` — anchored floating panel mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/popover`, sidebar nav
+- `TabPanel` — tabbed content panel mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/tab-panel`, sidebar nav, and `docs.css`
+- `Tabs` — accessible tabs primitive mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/tabs`, sidebar nav
+
+#### Display & Utility
+- `ButtonGroup` — grouped button row mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/button-group`, sidebar nav
+- `CodeTabs` — tabbed multi-language code viewer
+  - Registered in `MDXProvider`, barrel export; used inline in MDX files
+- `ColorPicker` — free-form color picker mirroring `@wordpress/components`
+  - Props: `color`, `onChange`, `enableAlpha`, `defaultValue`, `copyFormat`, `className`
+  - Spectrum proxy via native `<input type="color">`; optional opacity slider
+  - Three interactive persistent demos: basic, alpha channel, reset-to-default
+  - Registered in `MDXProvider`, barrel export, route `/docs/color-picker`, sidebar nav, and `docs.css`
+- `FocalPointPicker` — image focal point selector mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/focal-point-picker`, sidebar nav, and `docs.css`
+- `FontSizePicker` — font size selector mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/font-size-picker`, sidebar nav, and `docs.css`
+- `Notice` — dismissible status message mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/notice`, sidebar nav, and `docs.css`
+- `PanelBody` — collapsible inspector panel mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/panel-body`, sidebar nav, and `docs.css`
+- `Placeholder` — empty-state block placeholder mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/placeholder`, sidebar nav, and `docs.css`
+- `Snackbar` — temporary toast notification mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/snackbar`, sidebar nav
+- `Spinner` — loading indicator mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/spinner`, sidebar nav, and `docs.css`
+- `Tooltip` — hover label for UI elements mirroring `@wordpress/components`
+  - Registered in `MDXProvider`, barrel export, route `/docs/tooltip`, sidebar nav, and `docs.css`
 
 ---
 
@@ -141,6 +200,7 @@ All notable changes to this project will be documented in this file.
 ## [1.4.0] - 2026-02-19
 
 ### Added
+
 - `RangeControl` component — numeric slider mirroring `@wordpress/components`
   - Props: `label`, `value`, `onChange`, `min`, `max`, `step`, `help`, `disabled`, `withInputField`, `className`
   - Paired numeric input field, min/max labels, keyboard accessible, focus-visible ring
