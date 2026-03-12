@@ -13,6 +13,9 @@ npm run dev
 
 Then open `http://localhost:5173` — you'll see the sidebar navigation and live MDX-rendered documentation with interactive React components.
 
+
+*NOTE:* Install the [MDX extension](https://marketplace.visualstudio.com/items?itemName=unifiedjs.vscode-mdx#:~:text=Install,support%20for%20MDX%20code%20blocks.) from *unified* for syntax highlighting in VS Code. 
+
 ## Project Structure
 
 | File | Purpose |
@@ -126,3 +129,101 @@ See [USAGE.md](./USAGE.md) for the full WordPress porting strategy, including:
 - Server-side MDX compilation via `@mdx-js/mdx`
 - Component mapping from custom components to `@wordpress/components`
 - Three implementation approaches (MDX Block, Pre-compiled Pages, Hybrid)
+
+---
+
+## Plugin Builder (`/interface`)
+
+A client-side WordPress plugin and block prototyping tool built into Gutendocs. Use it to design portfolio project ideas — configure plugin metadata, add Gutenberg blocks, and generate copy-paste scaffolded code — entirely in the browser with no backend.
+
+Access it via the **Plugin Builder** link at the bottom of the docs sidebar, or go directly to `/interface`.
+
+### What it does
+
+- **Project portfolio** — Create, edit, duplicate, and delete plugin project prototypes. Status: draft / active / archived.
+- **Plugin metadata editor** — Set plugin name, slug, description, author, version, license, text domain, namespace, and tags. All validated against WordPress plugin header standards.
+- **Block builder** — Add Gutenberg blocks to a plugin. For each block, configure:
+  - General: name, title, description, category, icon
+  - Attributes: name, type, default value, source (none / attribute / text / html / query / meta)
+  - Supports: all `block.json` supports flags grouped by Behavior, Layout, Color, Typography, Spacing
+  - Editor behavior: RichText, InnerBlocks, MediaUpload, InspectorControls, BlockControls, view.js
+- **Code generator** — Live code output for every file in the plugin. Select a block to view its specific files.
+- **Download** — Download all generated files individually (one browser download per file).
+
+### Routes
+
+| URL | Page |
+|---|---|
+| `/interface` | Portfolio — project grid |
+| `/interface/new` | New project wizard (2 steps) |
+| `/interface/:id` | Project hub — overview of one plugin |
+| `/interface/:id/plugin` | Plugin metadata editor |
+| `/interface/:id/blocks/new` | Add a new block |
+| `/interface/:id/blocks/:blockId` | Edit an existing block |
+| `/interface/:id/generate` | Code generator + file download |
+
+### Generated files
+
+For each plugin project the generator produces:
+
+| File | Description |
+|---|---|
+| `my-plugin.php` | Plugin header comment, namespace declaration, `register_block_type()` calls |
+| `package.json` | `@wordpress/scripts` devDependency with standard build/start/lint scripts |
+| `src/block-name/block.json` | `apiVersion: 3`, `$schema`, name, attributes, supports |
+| `src/block-name/edit.js` | Editor component with conditional imports based on editor behavior flags |
+| `src/block-name/save.js` | Save component with `useBlockProps.save()` |
+| `src/block-name/view.js` | Front-end vanilla JS (only when _Generate view.js_ is enabled) |
+
+All generators are pure functions in `src/interface/generators/` — they take plain JS objects and return strings with no side effects.
+
+### Data
+
+All projects persist in `localStorage` under the key `gutendocs-projects` as a `JSON` array. No server, no account required.
+
+```
+localStorage key: gutendocs-projects → Array<Project>
+```
+
+Each project stores full plugin metadata and an array of block models. IDs are generated with `crypto.randomUUID()`.
+
+### File structure
+
+```
+src/interface/
+├── PLAN.md                    — Feature plan and future roadmap
+├── InterfaceApp.jsx           — Sub-router for /interface/*
+├── agents/                    — Agent configuration docs (6 roles)
+├── components/
+│   ├── blocks/                — Block editor components
+│   ├── generator/             — Code output + download
+│   ├── plugin/                — Plugin metadata form
+│   ├── portfolio/             — Project cards and grid
+│   └── shared/                — Breadcrumb, FieldGroup, ConfirmDialog, etc.
+├── data/                      — Factory functions and constants
+├── generators/                — Pure code generation functions
+├── hooks/                     — useProjects, useProject, useBlock, useClipboard
+├── layouts/
+│   └── InterfaceLayout.jsx    — Sidebar + content layout (iface-* BEM)
+├── pages/                     — Page-level route components
+└── styles/
+    └── interface.css          — All interface styles (iface-* BEM namespace)
+```
+
+### Agent configs
+
+Six agent definition files in `src/interface/agents/` describe the responsibilities for each development role. They are displayed in a collapsible panel on the Generator page and can be copied as system prompts.
+
+| File | Role |
+|---|---|
+| `optimization.agent.md` | Security, WPCS, Plugin Check Plugin (PCP) compliance, performance |
+| `development.agent.md` | edit.js / save.js / view.js patterns, block API standards |
+| `documentation.agent.md` | PHPDoc, JSDoc, README.txt (wordpress.org), changelog |
+| `testing.agent.md` | PHPUnit, Jest, Playwright E2E, axe-core accessibility |
+| `compatibility.agent.md` | WP/PHP/React version matrix, block apiVersion differences |
+| `integration.agent.md` | Gravity Forms, WooCommerce, The Events Calendar, theme compatibility |
+
+### Planned: zip bundle download
+
+The current download sends each file as a separate browser download. A single `.zip` bundle is planned — see `src/interface/PLAN.md` for the implementation spec (requires `jszip`).
+
