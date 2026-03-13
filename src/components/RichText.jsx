@@ -22,6 +22,7 @@
  * @param {boolean}         [props.disabled=false]          - Disables editing.
  */
 import { useRef, useEffect, useState } from 'react';
+import DOMPurify from 'dompurify';
 
 const ALL_FORMATS = [ 'core/bold', 'core/italic', 'core/link' ];
 
@@ -58,8 +59,9 @@ export default function RichText( {
 	// Sync external value changes without resetting cursor position.
 	useEffect( () => {
 		const el = editableRef.current;
-		if ( el && el.innerHTML !== value ) {
-			el.innerHTML = value || '';
+		const clean = DOMPurify.sanitize( value || '' );
+		if ( el && el.innerHTML !== clean ) {
+			el.innerHTML = clean;
 		}
 	}, [ value ] );
 
@@ -142,7 +144,7 @@ RichText.Content = function RichTextContent( {
 		<Tag
 			className={ className || undefined }
 			style={ style }
-			dangerouslySetInnerHTML={ { __html: value } }
+			dangerouslySetInnerHTML={ { __html: DOMPurify.sanitize( value ) } }
 		/>
 	);
 };
