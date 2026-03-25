@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { MDXComponentsProvider } from './providers/MDXComponents';
 import App from './App';
 import './styles/docs.css';
+import './interface/styles/interface.css';
 
 createRoot( document.getElementById( 'root' ) ).render(
 	<StrictMode>

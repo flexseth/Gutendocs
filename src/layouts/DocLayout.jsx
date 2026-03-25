@@ -47,6 +47,7 @@ const navItems = [
 	{ path: '/docs/tools-panel', label: 'ToolsPanel' },
 	{ path: '/docs/tooltip', label: 'Tooltip' },
 	{ path: '/docs/unit-control', label: 'UnitControl' },
+	{ path: '/interface', label: 'Plugin Builder', section: 'tools' },
 ];
 
 /**
@@ -64,8 +65,15 @@ export default function DocLayout( { children } ) {
 				</div>
 				<nav className="doc-sidebar__nav">
 					<ul>
-						{ navItems.map( ( item ) => (
+						{ navItems.map( ( item, index ) => (
 							<li key={ item.path }>
+								{ item.section &&
+									item.section !== navItems[ index - 1 ]?.section && (
+										<span className="doc-sidebar__section-label">
+											{ item.section.charAt( 0 ).toUpperCase() +
+												item.section.slice( 1 ) }
+										</span>
+									) }
 								<NavLink
 									to={ item.path }
 									className={ ( { isActive } ) =>

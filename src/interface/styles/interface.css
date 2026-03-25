@@ -1,0 +1,1094 @@
+/* ==========================================================================
+   Interface Feature — WordPress Plugin/Block Builder
+   BEM namespace: iface-*
+   ========================================================================== */
+
+:root {
+	--iface-sidebar-width: 220px;
+	--iface-card-radius: 10px;
+	--iface-form-gap: 1.25rem;
+	--iface-badge-draft: #94a3b8;
+	--iface-badge-active: var(--color-success);
+	--iface-badge-archived: var(--color-text-muted);
+}
+
+/* ==========================================================================
+   Layout
+   ========================================================================== */
+
+.iface-layout {
+	display: flex;
+	min-height: 100vh;
+}
+
+.iface-sidebar {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: var(--iface-sidebar-width);
+	height: 100vh;
+	overflow-y: auto;
+	background: var(--color-bg-muted);
+	border-right: 1px solid var(--color-border);
+	padding: 1.5rem 0;
+	display: flex;
+	flex-direction: column;
+}
+
+.iface-sidebar__brand {
+	padding: 0 1.5rem 1rem;
+	border-bottom: 1px solid var(--color-border);
+	margin-bottom: 1rem;
+}
+
+.iface-sidebar__brand h2 {
+	font-size: 1.1rem;
+	color: var(--color-accent);
+	margin: 0;
+}
+
+.iface-sidebar__brand-sub {
+	font-size: 0.75rem;
+	color: var(--color-text-muted);
+	margin-top: 0.2rem;
+}
+
+.iface-sidebar__nav {
+	flex: 1;
+}
+
+.iface-sidebar__nav ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.iface-sidebar__link {
+	display: block;
+	padding: 0.5rem 1.5rem;
+	color: var(--color-text-muted);
+	text-decoration: none;
+	font-size: 0.925rem;
+	transition: background 0.15s, color 0.15s;
+}
+
+.iface-sidebar__link:hover {
+	background: var(--color-border);
+	color: var(--color-text);
+}
+
+.iface-sidebar__link--active {
+	color: var(--color-accent);
+	background: #eef2ff;
+	font-weight: 600;
+	border-right: 3px solid var(--color-accent);
+}
+
+.iface-sidebar__back {
+	padding: 1.5rem 1.5rem 0;
+	margin-top: auto;
+	border-top: 1px solid var(--color-border);
+}
+
+.iface-sidebar__back a {
+	color: var(--color-text-muted);
+	text-decoration: none;
+	font-size: 0.825rem;
+	display: flex;
+	align-items: center;
+	gap: 0.4rem;
+}
+
+.iface-sidebar__back a:hover {
+	color: var(--color-primary);
+}
+
+.iface-content {
+	margin-left: var(--iface-sidebar-width);
+	flex: 1;
+	padding: 2.5rem 3rem;
+	max-width: 960px;
+}
+
+/* ==========================================================================
+   Page Header
+   ========================================================================== */
+
+.iface-page-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin-bottom: 2rem;
+	gap: 1rem;
+}
+
+.iface-page-header h1 {
+	font-size: 1.75rem;
+	color: var(--color-text);
+	margin: 0;
+}
+
+/* ==========================================================================
+   Section Heading
+   ========================================================================== */
+
+.iface-section-heading {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	margin: 2rem 0 1rem;
+}
+
+.iface-section-heading h2 {
+	font-size: 1.1rem;
+	color: var(--color-text);
+	margin: 0;
+}
+
+.iface-section-heading p {
+	font-size: 0.875rem;
+	color: var(--color-text-muted);
+	margin: 0.25rem 0 0;
+}
+
+/* ==========================================================================
+   Breadcrumb
+   ========================================================================== */
+
+.iface-breadcrumb {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 0.825rem;
+	color: var(--color-text-muted);
+	margin-bottom: 1.5rem;
+}
+
+.iface-breadcrumb__item {
+	color: var(--color-text-muted);
+	text-decoration: none;
+}
+
+.iface-breadcrumb__item:hover {
+	color: var(--color-primary);
+	text-decoration: underline;
+}
+
+.iface-breadcrumb__item--current {
+	color: var(--color-text);
+	font-weight: 500;
+}
+
+.iface-breadcrumb__sep {
+	color: var(--color-border);
+}
+
+/* ==========================================================================
+   Buttons
+   ========================================================================== */
+
+.iface-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.4rem;
+	padding: 0.5rem 1.1rem;
+	border-radius: 6px;
+	font-size: 0.875rem;
+	font-weight: 500;
+	border: 1px solid transparent;
+	cursor: pointer;
+	text-decoration: none;
+	transition: background 0.15s, color 0.15s, border-color 0.15s;
+	white-space: nowrap;
+}
+
+.iface-btn--primary {
+	background: var(--color-accent);
+	color: #fff;
+	border-color: var(--color-accent);
+}
+
+.iface-btn--primary:hover {
+	background: var(--color-accent-dark);
+	border-color: var(--color-accent-dark);
+}
+
+.iface-btn--secondary {
+	background: var(--color-bg);
+	color: var(--color-text);
+	border-color: var(--color-border);
+}
+
+.iface-btn--secondary:hover {
+	background: var(--color-bg-muted);
+}
+
+.iface-btn--danger {
+	background: transparent;
+	color: var(--color-error);
+	border-color: var(--color-error);
+}
+
+.iface-btn--danger:hover {
+	background: var(--color-error);
+	color: #fff;
+}
+
+.iface-btn--sm {
+	padding: 0.3rem 0.75rem;
+	font-size: 0.8rem;
+}
+
+.iface-btn:disabled {
+	opacity: 0.5;
+	cursor: not-allowed;
+}
+
+/* ==========================================================================
+   Copy Button
+   ========================================================================== */
+
+.iface-copy-btn {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.3rem;
+	padding: 0.3rem 0.65rem;
+	font-size: 0.775rem;
+	border-radius: 4px;
+	border: 1px solid var(--color-border);
+	background: var(--color-bg);
+	color: var(--color-text-muted);
+	cursor: pointer;
+	transition: all 0.15s;
+}
+
+.iface-copy-btn:hover {
+	border-color: var(--color-primary);
+	color: var(--color-primary);
+}
+
+.iface-copy-btn--copied {
+	background: #f0fdf4;
+	border-color: var(--color-success);
+	color: var(--color-success);
+}
+
+/* ==========================================================================
+   Status Badge
+   ========================================================================== */
+
+.iface-status-badge {
+	display: inline-block;
+	padding: 0.2rem 0.6rem;
+	border-radius: 100px;
+	font-size: 0.725rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}
+
+.iface-status-badge--draft {
+	background: #f1f5f9;
+	color: var(--iface-badge-draft);
+}
+
+.iface-status-badge--active {
+	background: #f0fdf4;
+	color: var(--iface-badge-active);
+}
+
+.iface-status-badge--archived {
+	background: #f8fafc;
+	color: var(--iface-badge-archived);
+}
+
+/* ==========================================================================
+   Portfolio Grid
+   ========================================================================== */
+
+.iface-portfolio {
+	padding-bottom: 3rem;
+}
+
+.iface-project-grid {
+	display: grid;
+	grid-template-columns: repeat( auto-fill, minmax( 280px, 1fr ) );
+	gap: 1.25rem;
+}
+
+.iface-project-card {
+	background: var(--color-bg);
+	border: 1px solid var(--color-border);
+	border-radius: var(--iface-card-radius);
+	padding: 1.25rem;
+	display: flex;
+	flex-direction: column;
+	gap: 0.75rem;
+	transition: box-shadow 0.15s;
+}
+
+.iface-project-card:hover {
+	box-shadow: 0 4px 16px rgba( 0, 0, 0, 0.07 );
+}
+
+.iface-project-card__header {
+	display: flex;
+	align-items: flex-start;
+	justify-content: space-between;
+	gap: 0.5rem;
+}
+
+.iface-project-card__name {
+	font-size: 1rem;
+	font-weight: 600;
+	color: var(--color-text);
+	margin: 0;
+}
+
+.iface-project-card__desc {
+	font-size: 0.85rem;
+	color: var(--color-text-muted);
+	line-height: 1.5;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	overflow: hidden;
+}
+
+.iface-project-card__meta {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 0.775rem;
+	color: var(--color-text-muted);
+}
+
+.iface-project-card__tags {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+}
+
+.iface-project-card__tag {
+	background: #f1f5f9;
+	color: var(--color-text-muted);
+	padding: 0.15rem 0.5rem;
+	border-radius: 4px;
+	font-size: 0.725rem;
+}
+
+.iface-project-card__actions {
+	display: flex;
+	gap: 0.5rem;
+	margin-top: auto;
+	padding-top: 0.5rem;
+	border-top: 1px solid var(--color-border);
+}
+
+/* ==========================================================================
+   Empty Portfolio
+   ========================================================================== */
+
+.iface-empty {
+	text-align: center;
+	padding: 4rem 2rem;
+	color: var(--color-text-muted);
+}
+
+.iface-empty__icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.iface-empty h3 {
+	font-size: 1.25rem;
+	color: var(--color-text);
+	margin-bottom: 0.5rem;
+}
+
+.iface-empty p {
+	margin-bottom: 1.5rem;
+	max-width: 380px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+/* ==========================================================================
+   Field Group (Form wrapper)
+   ========================================================================== */
+
+.iface-field-group {
+	display: flex;
+	flex-direction: column;
+	gap: 0.35rem;
+}
+
+.iface-field-group__label {
+	font-size: 0.875rem;
+	font-weight: 600;
+	color: var(--color-text);
+}
+
+.iface-field-group__label--required::after {
+	content: ' *';
+	color: var(--color-error);
+}
+
+.iface-field-group__help {
+	font-size: 0.8rem;
+	color: var(--color-text-muted);
+}
+
+.iface-field-group__input input,
+.iface-field-group__input textarea,
+.iface-field-group__input select {
+	width: 100%;
+	padding: 0.5rem 0.75rem;
+	border: 1px solid var(--color-border);
+	border-radius: 6px;
+	font-size: 0.875rem;
+	font-family: var(--font-sans);
+	color: var(--color-text);
+	background: var(--color-bg);
+	transition: border-color 0.15s;
+}
+
+.iface-field-group__input input:focus,
+.iface-field-group__input textarea:focus,
+.iface-field-group__input select:focus {
+	outline: none;
+	border-color: var(--color-accent);
+	box-shadow: 0 0 0 2px rgba( 79, 70, 229, 0.1 );
+}
+
+.iface-field-group__input textarea {
+	resize: vertical;
+	min-height: 80px;
+}
+
+/* ==========================================================================
+   Plugin Form
+   ========================================================================== */
+
+.iface-plugin-form {
+	display: grid;
+	grid-template-columns: 1fr 1fr;
+	gap: var(--iface-form-gap);
+}
+
+.iface-plugin-form .iface-field-group--full {
+	grid-column: 1 / -1;
+}
+
+/* ==========================================================================
+   Tags Input
+   ========================================================================== */
+
+.iface-tags-input {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.35rem;
+	padding: 0.4rem 0.6rem;
+	border: 1px solid var(--color-border);
+	border-radius: 6px;
+	background: var(--color-bg);
+	cursor: text;
+	min-height: 40px;
+	align-items: center;
+	transition: border-color 0.15s;
+}
+
+.iface-tags-input:focus-within {
+	border-color: var(--color-accent);
+	box-shadow: 0 0 0 2px rgba( 79, 70, 229, 0.1 );
+}
+
+.iface-tags-input__tag {
+	display: inline-flex;
+	align-items: center;
+	gap: 0.25rem;
+	background: #eef2ff;
+	color: var(--color-accent);
+	padding: 0.15rem 0.5rem;
+	border-radius: 4px;
+	font-size: 0.8rem;
+}
+
+.iface-tags-input__remove {
+	background: none;
+	border: none;
+	cursor: pointer;
+	color: inherit;
+	padding: 0;
+	font-size: 0.9rem;
+	line-height: 1;
+	opacity: 0.6;
+}
+
+.iface-tags-input__remove:hover {
+	opacity: 1;
+}
+
+.iface-tags-input__field {
+	border: none;
+	outline: none;
+	font-size: 0.875rem;
+	background: transparent;
+	flex: 1;
+	min-width: 80px;
+	color: var(--color-text);
+}
+
+/* ==========================================================================
+   Slug Preview
+   ========================================================================== */
+
+.iface-slug-preview {
+	font-family: var(--font-mono);
+	font-size: 0.825rem;
+	color: var(--color-text-muted);
+	background: var(--color-bg-muted);
+	border: 1px solid var(--color-border);
+	border-radius: 4px;
+	padding: 0.4rem 0.75rem;
+}
+
+.iface-slug-preview__label {
+	color: var(--color-text-muted);
+	margin-right: 0.5rem;
+}
+
+/* ==========================================================================
+   Block List
+   ========================================================================== */
+
+.iface-block-list {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.iface-block-item {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	padding: 0.875rem 1rem;
+	background: var(--color-bg);
+	border: 1px solid var(--color-border);
+	border-radius: 8px;
+	transition: box-shadow 0.15s;
+}
+
+.iface-block-item:hover {
+	box-shadow: 0 2px 8px rgba( 0, 0, 0, 0.06 );
+}
+
+.iface-block-item__name {
+	font-weight: 600;
+	font-size: 0.9rem;
+	color: var(--color-text);
+}
+
+.iface-block-item__meta {
+	font-size: 0.8rem;
+	color: var(--color-text-muted);
+}
+
+.iface-block-item__slug {
+	font-family: var(--font-mono);
+	font-size: 0.775rem;
+	color: var(--color-text-muted);
+}
+
+.iface-block-item__actions {
+	display: flex;
+	gap: 0.5rem;
+	margin-left: auto;
+}
+
+/* ==========================================================================
+   Block Form Tabs
+   ========================================================================== */
+
+.iface-tabs {
+	border-bottom: 2px solid var(--color-border);
+	display: flex;
+	gap: 0;
+	margin-bottom: 1.5rem;
+}
+
+.iface-tab {
+	padding: 0.6rem 1.1rem;
+	font-size: 0.875rem;
+	font-weight: 500;
+	color: var(--color-text-muted);
+	background: none;
+	border: none;
+	border-bottom: 2px solid transparent;
+	cursor: pointer;
+	margin-bottom: -2px;
+	transition: color 0.15s;
+}
+
+.iface-tab:hover {
+	color: var(--color-text);
+}
+
+.iface-tab--active {
+	color: var(--color-accent);
+	border-bottom-color: var(--color-accent);
+}
+
+/* ==========================================================================
+   Attribute Builder
+   ========================================================================== */
+
+.iface-attr-builder {
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.iface-attr-row {
+	display: grid;
+	grid-template-columns: 1.5fr 1fr 1.5fr 1fr auto;
+	gap: 0.5rem;
+	align-items: center;
+}
+
+.iface-attr-row input,
+.iface-attr-row select {
+	width: 100%;
+	padding: 0.4rem 0.6rem;
+	border: 1px solid var(--color-border);
+	border-radius: 5px;
+	font-size: 0.825rem;
+	color: var(--color-text);
+	background: var(--color-bg);
+}
+
+.iface-attr-row input:focus,
+.iface-attr-row select:focus {
+	outline: none;
+	border-color: var(--color-accent);
+}
+
+.iface-attr-builder__header {
+	display: grid;
+	grid-template-columns: 1.5fr 1fr 1.5fr 1fr auto;
+	gap: 0.5rem;
+	font-size: 0.75rem;
+	font-weight: 700;
+	color: var(--color-text-muted);
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+	padding: 0 0 0.5rem;
+	border-bottom: 1px solid var(--color-border);
+}
+
+/* ==========================================================================
+   Supports Editor
+   ========================================================================== */
+
+.iface-supports-grid {
+	display: flex;
+	flex-direction: column;
+	gap: 1.5rem;
+}
+
+.iface-supports-group__label {
+	font-size: 0.825rem;
+	font-weight: 700;
+	color: var(--color-text-muted);
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	margin-bottom: 0.6rem;
+}
+
+.iface-supports-group__options {
+	display: grid;
+	grid-template-columns: repeat( auto-fill, minmax( 200px, 1fr ) );
+	gap: 0.5rem;
+}
+
+.iface-supports-option {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 0.875rem;
+	color: var(--color-text);
+	cursor: pointer;
+}
+
+.iface-supports-option input[type='checkbox'] {
+	accent-color: var(--color-accent);
+	width: 15px;
+	height: 15px;
+}
+
+/* ==========================================================================
+   Block Name Preview
+   ========================================================================== */
+
+.iface-block-name-preview {
+	font-family: var(--font-mono);
+	font-size: 0.9rem;
+	color: var(--color-accent);
+	background: #eef2ff;
+	border-radius: 5px;
+	padding: 0.4rem 0.75rem;
+	display: inline-block;
+}
+
+/* ==========================================================================
+   Generator
+   ========================================================================== */
+
+.iface-generator {
+	display: grid;
+	grid-template-columns: 200px 1fr;
+	gap: 1.5rem;
+	align-items: start;
+}
+
+.iface-generator__block-selector {
+	position: sticky;
+	top: 1.5rem;
+}
+
+.iface-generator__block-selector ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	border: 1px solid var(--color-border);
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.iface-generator__block-btn {
+	display: block;
+	width: 100%;
+	text-align: left;
+	padding: 0.65rem 1rem;
+	font-size: 0.875rem;
+	background: var(--color-bg);
+	border: none;
+	border-bottom: 1px solid var(--color-border);
+	cursor: pointer;
+	color: var(--color-text-muted);
+	transition: background 0.12s;
+}
+
+.iface-generator__block-btn:last-child {
+	border-bottom: none;
+}
+
+.iface-generator__block-btn:hover {
+	background: var(--color-bg-muted);
+	color: var(--color-text);
+}
+
+.iface-generator__block-btn--active {
+	background: #eef2ff;
+	color: var(--color-accent);
+	font-weight: 600;
+}
+
+.iface-generator__output {
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.iface-generator__file {
+	border: 1px solid var(--color-border);
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.iface-generator__file-header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.6rem 1rem;
+	background: var(--color-bg-muted);
+	border-bottom: 1px solid var(--color-border);
+}
+
+.iface-generator__filename {
+	font-family: var(--font-mono);
+	font-size: 0.825rem;
+	color: var(--color-text);
+	font-weight: 600;
+}
+
+/* ==========================================================================
+   Generator Tabs
+   ========================================================================== */
+
+.iface-gen-tabs {
+	border: 1px solid var(--color-border);
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.iface-gen-tabs__bar {
+	display: flex;
+	background: var(--color-bg-muted);
+	border-bottom: 1px solid var(--color-border);
+	overflow-x: auto;
+}
+
+.iface-gen-tabs__tab {
+	padding: 0.6rem 1rem;
+	font-size: 0.825rem;
+	font-weight: 500;
+	color: var(--color-text-muted);
+	background: none;
+	border: none;
+	border-right: 1px solid var(--color-border);
+	cursor: pointer;
+	white-space: nowrap;
+	transition: background 0.12s, color 0.12s;
+}
+
+.iface-gen-tabs__tab:hover {
+	background: var(--color-border);
+	color: var(--color-text);
+}
+
+.iface-gen-tabs__tab--active {
+	background: var(--color-bg);
+	color: var(--color-accent);
+	font-weight: 600;
+}
+
+.iface-gen-tabs__content {
+	position: relative;
+}
+
+.iface-gen-tabs__copy {
+	position: absolute;
+	top: 0.75rem;
+	right: 0.75rem;
+	z-index: 1;
+}
+
+/* ==========================================================================
+   Agent Panel
+   ========================================================================== */
+
+.iface-agent-panel {
+	margin-top: 2rem;
+	border: 1px solid var(--color-border);
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.iface-agent-panel__header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	padding: 0.875rem 1.25rem;
+	background: var(--color-bg-muted);
+	cursor: pointer;
+	user-select: none;
+}
+
+.iface-agent-panel__header h3 {
+	font-size: 0.925rem;
+	margin: 0;
+	color: var(--color-text);
+}
+
+.iface-agent-panel__body {
+	display: grid;
+	grid-template-columns: repeat( auto-fill, minmax( 280px, 1fr ) );
+	gap: 1px;
+	background: var(--color-border);
+}
+
+.iface-agent-panel__agent {
+	background: var(--color-bg);
+	padding: 1.25rem;
+}
+
+.iface-agent-panel__agent h4 {
+	font-size: 0.825rem;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.06em;
+	color: var(--color-accent);
+	margin: 0 0 0.75rem;
+}
+
+.iface-agent-panel__agent pre {
+	font-size: 0.775rem;
+	color: var(--color-text-muted);
+	white-space: pre-wrap;
+	word-break: break-word;
+	line-height: 1.6;
+}
+
+/* ==========================================================================
+   Confirm Dialog
+   ========================================================================== */
+
+.iface-dialog-overlay {
+	position: fixed;
+	inset: 0;
+	background: rgba( 0, 0, 0, 0.35 );
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+}
+
+.iface-dialog {
+	background: var(--color-bg);
+	border-radius: 10px;
+	padding: 1.75rem;
+	max-width: 400px;
+	width: 90%;
+	box-shadow: 0 20px 60px rgba( 0, 0, 0, 0.15 );
+}
+
+.iface-dialog h3 {
+	font-size: 1.05rem;
+	margin: 0 0 0.5rem;
+	color: var(--color-text);
+}
+
+.iface-dialog p {
+	font-size: 0.875rem;
+	color: var(--color-text-muted);
+	margin: 0 0 1.5rem;
+}
+
+.iface-dialog__actions {
+	display: flex;
+	gap: 0.75rem;
+	justify-content: flex-end;
+}
+
+/* ==========================================================================
+   Project Hub Cards
+   ========================================================================== */
+
+.iface-hub {
+	display: grid;
+	grid-template-columns: repeat( auto-fill, minmax( 280px, 1fr ) );
+	gap: 1.25rem;
+	margin-bottom: 2rem;
+}
+
+.iface-hub-card {
+	background: var(--color-bg);
+	border: 1px solid var(--color-border);
+	border-radius: var(--iface-card-radius);
+	padding: 1.25rem;
+	text-decoration: none;
+	color: inherit;
+	transition: box-shadow 0.15s, border-color 0.15s;
+	display: flex;
+	flex-direction: column;
+	gap: 0.5rem;
+}
+
+.iface-hub-card:hover {
+	box-shadow: 0 4px 16px rgba( 0, 0, 0, 0.07 );
+	border-color: var(--color-accent);
+}
+
+.iface-hub-card__icon {
+	font-size: 1.75rem;
+}
+
+.iface-hub-card h3 {
+	font-size: 1rem;
+	margin: 0;
+	color: var(--color-text);
+}
+
+.iface-hub-card p {
+	font-size: 0.825rem;
+	color: var(--color-text-muted);
+	margin: 0;
+}
+
+/* ==========================================================================
+   Wizard
+   ========================================================================== */
+
+.iface-wizard {
+	max-width: 600px;
+}
+
+.iface-wizard__steps {
+	display: flex;
+	gap: 0;
+	margin-bottom: 2rem;
+}
+
+.iface-wizard__step {
+	flex: 1;
+	padding: 0.5rem 1rem;
+	text-align: center;
+	font-size: 0.825rem;
+	font-weight: 500;
+	color: var(--color-text-muted);
+	border-bottom: 2px solid var(--color-border);
+}
+
+.iface-wizard__step--active {
+	color: var(--color-accent);
+	border-bottom-color: var(--color-accent);
+}
+
+.iface-wizard__step--done {
+	color: var(--color-success);
+	border-bottom-color: var(--color-success);
+}
+
+.iface-wizard__actions {
+	display: flex;
+	gap: 0.75rem;
+	margin-top: 2rem;
+	padding-top: 1.5rem;
+	border-top: 1px solid var(--color-border);
+}
+
+/* ==========================================================================
+   Responsive
+   ========================================================================== */
+
+@media ( max-width: 768px ) {
+	.iface-sidebar {
+		position: relative;
+		width: 100%;
+		height: auto;
+		border-right: none;
+		border-bottom: 1px solid var(--color-border);
+	}
+
+	.iface-layout {
+		flex-direction: column;
+	}
+
+	.iface-content {
+		margin-left: 0;
+		padding: 1.5rem;
+	}
+
+	.iface-plugin-form {
+		grid-template-columns: 1fr;
+	}
+
+	.iface-generator {
+		grid-template-columns: 1fr;
+	}
+
+	.iface-attr-row {
+		grid-template-columns: 1fr 1fr;
+	}
+}

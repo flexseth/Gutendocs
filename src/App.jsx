@@ -1,5 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 import DocLayout from './layouts/DocLayout';
+import InterfaceApp from './interface/InterfaceApp';
 import GettingStarted from './docs/getting-started.mdx';
 import AlertDocs from './docs/alert.mdx';
 import BaseControlDocs from './docs/base-control.mdx';
@@ -52,9 +53,14 @@ import UnitControlDocs from './docs/unit-control.mdx';
  */
 export default function App() {
 	return (
-		<DocLayout>
-			<Routes>
-				<Route path="/" element={ <Navigate to="/docs/getting-started" replace /> } />
+		<Routes>
+			<Route path="/interface/*" element={ <InterfaceApp /> } />
+			<Route
+				path="*"
+				element={
+					<DocLayout>
+						<Routes>
+							<Route path="/" element={ <Navigate to="/docs/getting-started" replace /> } />
 				<Route path="/docs/getting-started" element={ <GettingStarted /> } />
 				<Route path="/docs/alert" element={ <AlertDocs /> } />
 				<Route path="/docs/base-control" element={ <BaseControlDocs /> } />
@@ -101,7 +107,10 @@ export default function App() {
 				<Route path="/docs/tools-panel" element={ <ToolsPanelDocs /> } />
 				<Route path="/docs/tooltip" element={ <TooltipDocs /> } />
 				<Route path="/docs/unit-control" element={ <UnitControlDocs /> } />
-			</Routes>
-		</DocLayout>
+						</Routes>
+					</DocLayout>
+				}
+			/>
+		</Routes>
 	);
 }

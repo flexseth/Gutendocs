@@ -91,6 +91,18 @@ body {
 	border-right: 3px solid var(--color-primary);
 }
 
+.doc-sidebar__section-label {
+	display: block;
+	padding: 1rem 1.5rem 0.25rem;
+	font-size: 0.7rem;
+	font-weight: 700;
+	letter-spacing: 0.08em;
+	text-transform: uppercase;
+	color: var(--color-text-muted);
+	border-top: 1px solid var(--color-border);
+	margin-top: 0.5rem;
+}
+
 .doc-content {
 	margin-left: var(--sidebar-width);
 	flex: 1;
