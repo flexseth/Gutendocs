@@ -26,9 +26,9 @@ export function generatePluginPhp( project ) {
 		.filter( ( b ) => b.name )
 		.map(
 			( b ) =>
-				`\tregister_block_type( __DIR__ . '/build/${ b.name }' );`
+				`\t$block_dir = __DIR__ . '/build/${ b.name }';\n\tif ( file_exists( $block_dir ) ) {\n\t\tregister_block_type( $block_dir );\n\t}`
 		)
-		.join( '\n' );
+		.join( '\n\n' );
 
 	const hasBlocks = plugin.hasBlocks && blocks && blocks.length > 0;
 

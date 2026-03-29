@@ -1,0 +1,46 @@
+.mathrock {
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+	font-size: 1.5rem;
+
+	&__input {
+		width: 5rem;
+		font-size: inherit;
+		text-align: center;
+		border: 2px solid #1e1e1e;
+		border-radius: 4px;
+		padding: 0.25rem 0.5rem;
+
+		/* Hide browser spin buttons — keyboard navigation still works */
+		appearance: textfield;
+
+		&::-webkit-inner-spin-button,
+		&::-webkit-outer-spin-button {
+			appearance: none;
+		}
+
+		&:focus {
+			outline: 2px solid var(--wp-admin-theme-color, #007cba);
+			outline-offset: 2px;
+		}
+
+		&--locked {
+			border-color: #949494;
+			background-color: #f0f0f0;
+			color: #646464;
+			cursor: not-allowed;
+		}
+	}
+
+	&__operator,
+	&__equals {
+		font-weight: 600;
+		color: #1e1e1e;
+	}
+
+	&__result {
+		font-weight: 700;
+		color: var(--wp-admin-theme-color, #007cba);
+	}
+}

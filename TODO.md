@@ -1,4 +1,8 @@
+# fix
+- [ ] Interface: 
+
 # features
+- [ ] Add components: Click to add components (select list of WordPress component types and options)
 - Clipboard - Copy code snippets to clipboard
 - Code + Working Demo
 

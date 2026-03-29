@@ -1,0 +1,54 @@
+{
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "flexy-plugins/mathrock",
+	"version": "1.0.0",
+	"title": "Math Rock",
+	"category": "design",
+	"icon": "math",
+	"description": "Display the 2+2=5 block.",
+	"keywords": [],
+	"textdomain": "flexy_plugins",
+	"editorScript": "file:./index.js",
+	"attributes": {
+		"num1": {
+			"type": "integer",
+			"default": 2
+		},
+		"num2": {
+			"type": "integer",
+			"default": 2
+		},
+		"locked": {
+			"type": "boolean",
+			"default": false
+		}
+	},
+	"supports": {
+		"anchor": false,
+		"align": false,
+		"alignWide": true,
+		"className": true,
+		"customClassName": true,
+		"html": false,
+		"inserter": true,
+		"multiple": true,
+		"reusable": true,
+		"color": {
+			"background": true,
+			"text": true,
+			"link": false
+		},
+		"spacing": {
+			"margin": false,
+			"padding": false,
+			"blockGap": false
+		},
+		"typography": {
+			"fontSize": false,
+			"lineHeight": false
+		}
+	},
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css"
+}
